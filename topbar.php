@@ -16,7 +16,7 @@
             Search
         </button>
     </form>
-    <div class="d-flex justify-content-end gap-5 navigasi flex-fill">
+    <div class="d-flex justify-content-end gap-5 flex-fill align-items-center navigasi">
         <a href="#" class="btn btn-link">Help</a>
         <a href="#" class="btn btn-link">Contact</a>
         <a href="#" class="btn btn-link">
