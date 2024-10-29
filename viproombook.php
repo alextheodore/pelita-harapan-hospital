@@ -78,8 +78,10 @@
 
                     <div class="date-of-entry-section">
                         <h3>Date of Entry</h3>
-                        <button class="date-button active">Tue, Oct 1</button>
-                        <button class="date-button">Wed, Oct 2</button>
+                        <div class="dates">
+                            <label for="appointment-date">Select Date: </label>
+                            <input type="date" id="appointment-date" name="appointment-date">
+                        </div>
                     </div>
 
                     <a href="appoinmentinpatient.php" class="next-button">Next</a>

@@ -38,19 +38,8 @@
                     <div class="schedule-section">
                         <h3>Schedule & Make Appointments</h3>
                         <div class="dates">
-                            <?php
-                            $dates = [
-                                "Tue, Oct 1",
-                                "Wed, Oct 2",
-                                "Fri, Oct 4",
-                                "Sun, Oct 6",
-                                "Tue, Oct 8",
-                                "Wed, Oct 9"
-                            ];
-                            foreach ($dates as $date) {
-                                echo "<button class='date-btn'>$date</button>";
-                            }
-                            ?>
+                            <label for="appointment-date">Select Date: </label>
+                            <input type="date" id="appointment-date" name="appointment-date">
                         </div>
 
                         <div class="time-slots">

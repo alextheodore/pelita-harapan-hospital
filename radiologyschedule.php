@@ -34,13 +34,9 @@
                         </div>
                         <div class="schedule-details">
                             <h3>Schedule & Make Appointments</h3>
-                            <div class="date-options">
-                                <button class="date-btn" id="date-1">Tue, Oct 1</button>
-                                <button class="date-btn">Wed, Oct 2</button>
-                                <button class="date-btn">Fri, Oct 4</button>
-                                <button class="date-btn">Sun, Oct 6</button>
-                                <button class="date-btn">Tue, Oct 8</button>
-                                <button class="date-btn">Wed, Oct 9</button>
+                            <div class="dates">
+                                <label for="appointment-date">Select Date: </label>
+                                <input type="date" id="appointment-date" name="appointment-date">
                             </div>
                             <div class="time-options">
                                 <label><input type="radio" name="time" value="09.00 - 09.20"> 09.00 - 09.20</label><br>

@@ -45,7 +45,9 @@
                     <div class="confirmation-details">
                         <div>
                             <h3>Booking Details:</h3>
-                            <span>General Practitioner</span>
+                            <span>General Practitioner</span><br>
+                            Doctor: Dr. John Doe<br>
+                            Room: Examination Room 2</p>
                         </div>
                         <div>
                             <h3>Date of Entry:</h3>
