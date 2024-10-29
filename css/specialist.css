@@ -1,190 +1,189 @@
 :root {
-    --bg-color: #f9f3f3;
-    --text-color: #a2375f;
-    --accent-color: #e895b7;
-    --link-color: #a2375f;
-  }
-  
-  body {
-    font-family: "Arial", sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0 20px 20px 100px;
-    padding: 20px 0;
-  }
-  
-  .sidebar {
-    background-color: #fff;
-    text-align: center;
-    max-height: max-content;
-    max-width: 100%;
-    border-right: 1px solid #ccc;
-    color: var(--accent-color) !important;
-    border-radius: 30px;
-    margin-left: -80px;
-    margin-top: 50px;;
-  }
-  
-  .sidebar img {
-    border-radius: 40%;
-    width: 100%;
-  }
-  
-  .sidebar .nav-link {
-    color: var(--accent-color) !important;
-    font-weight: bold;
-    padding: 15px;
-    font-size: 18px;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .sidebar .nav-link:hover {
-    background-color: var(--accent-color);
-    color: var(--text-color) !important;
-  }
-  
-  .content {
-    background-color: var(--bg-color);
-    padding: 20px;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .search-form {
-    flex-grow: 1;
-    max-width: 40%;
-  }
-  
-  .search-form .form-control {
-    border-radius: 20px;
-  }
-  
-  .search-form .btn-outline-success {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-    border-radius: 20px;
-  }
-  
-  .search-form .btn-outline-success:hover {
-    background-color: var(--accent-color);
-    color: white;
-  }
-  
-  h1 {
-    font-weight: bold;
-    font-size: 2rem;
-    color: var(--text-color);
-  }
-  
-  h2 {
-    font-weight: bold;
-    font-size: 2rem;
-    text-align: start;
-    color: var(--accent-color);
-  }
-  
-  .hero-text > p {
-    font-size: 28px;
-    text-align: center;
-  }
-  
-  .navigasi {
-    border-bottom: 10px solid #fff;
-  }
-  
-  .navigasi > a {
-    font-weight: bold;
-    text-decoration: none;
-    color: var(--accent-color);
-  }
-  
-  .welcome-section {
-    background-color: white;
-    border-radius: 10px;
-    padding: 15px;
-    color: var(--accent-color);
-  }
-  
-  .image-container {
-    border-radius: 30px;
-    max-width: fit-content;
-    padding: 30px;
-    background-color: #fff;
-  }
-  
-  .form-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin: 10px 0;
+  --bg-color: #f9f3f3;
+  --text-color: #a2375f;
+  --accent-color: #e895b7;
+  --link-color: #a2375f;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0 20px 20px 100px;
+  padding: 20px 0;
+}
+
+.sidebar {
+  background-color: #fff;
+  text-align: center;
+  max-height: max-content;
+  max-width: 100%;
+  border-right: 1px solid #ccc;
+  color: var(--accent-color) !important;
+  border-radius: 30px;
+  margin-left: -80px;
+  margin-top: 50px;
+}
+
+.sidebar img {
+  border-radius: 40%;
+  width: 100%;
+}
+
+.sidebar .nav-link {
+  color: var(--accent-color) !important;
+  font-weight: bold;
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+  background-color: var(--accent-color);
+  color: var(--text-color) !important;
+}
+
+.content {
+  background-color: var(--bg-color);
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-form {
+  flex-grow: 1;
+  max-width: 40%;
+}
+
+.search-form .form-control {
+  border-radius: 20px;
+}
+
+.search-form .btn-outline-success {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  border-radius: 20px;
+}
+
+.search-form .btn-outline-success:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: start;
+  color: var(--accent-color);
+}
+
+.hero-text > p {
+  font-size: 28px;
+  text-align: center;
+}
+
+.navigasi {
+  border-bottom: 10px solid #fff;
+}
+
+.navigasi > a {
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--accent-color);
+}
+
+.welcome-section {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  color: var(--accent-color);
+}
+
+.image-container {
+  border-radius: 30px;
+  max-width: fit-content;
+  padding: 30px;
+  background-color: #fff;
+}
+
+.form-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0;
 }
 
 button {
-  background-color: #F8B5D8;
+  background-color: #f8b5d8;
   border: none;
   padding: 10px 20px;
   border-radius: 10px;
-  color: #FFF;
+  color: #fff;
   font-size: 16px;
   cursor: pointer;
   margin-top: 20px;
 }
 
 button:hover {
-  background-color: #E84C88;
+  background-color: #e84c88;
 }
 
 .form-group label {
   min-width: 150px;
-  color: #B2275C;
+  color: #b2275c;
 }
 
-input, select {
+input,
+select {
   flex: 1;
   padding: 10px;
-  border: 1px solid #E84C88;
+  border: 1px solid #e84c88;
   border-radius: 5px;
-  background-color: #FFF0F6;
+  background-color: #fff0f6;
   outline: none;
 }
 
 input::placeholder {
-  color: #D37C9C;
+  color: #d37c9c;
 }
 
 .specialist-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    max-width: 600px;
-    margin: 0 auto;
-
+  display: flex;
+  width: 100%;
+  margin: 0px auto;
 }
 
 .specialist-column {
-    flex-basis: 45%;
+  flex-basis: 75%;
+  margin-right: 50px;
 }
 
 .specialist-button {
-    background-color: #f9ced8;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    margin: 10px 0;
-    font-size: 16px;
-    color: black;
-    text-align: center;
-    display: block;
-    text-decoration: none; /* Menghilangkan garis bawah pada link */
-    width: 100%;
-    box-sizing: border-box;
+  background-color: #f9ced8;
+  border: none;
+  border-radius: 25px;
+  padding: 25px 25px;
+  margin: 100px 20px 0px 10px;
+  font-size: 16px;
+  color: black;
+  text-align: center;
+  display: block;
+  text-decoration: none; /* Menghilangkan garis bawah pada link */
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.specialist-button:hover{
-    background-color: #ffa7a7; 
+.specialist-button:hover {
+  background-color: #ffa7a7;
 }
