@@ -1,0 +1,119 @@
+:root {
+    --bg-color: #f9f3f3;
+    --text-color: #a2375f;
+    --accent-color: #e895b7;
+    --link-color: #a2375f;
+  }
+  
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0 20px 20px 100px;
+    padding: 20px 0;
+  }
+  
+  .sidebar {
+    background-color: #fff;
+    text-align: center;
+    max-height: max-content;
+    max-width: 100%;
+    border-right: 1px solid #ccc;
+    color: var(--accent-color) !important;
+    border-radius: 30px;
+    margin-left: -80px;
+    margin-top: 50px;;
+  }
+  
+  .sidebar img {
+    border-radius: 40%;
+    width: 100%;
+  }
+  
+  .sidebar .nav-link {
+    color: var(--accent-color) !important;
+    font-weight: bold;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar .nav-link:hover {
+    background-color: var(--accent-color);
+    color: var(--text-color) !important;
+  }
+  
+  .content {
+    background-color: var(--bg-color);
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .search-form {
+    flex-grow: 1;
+    max-width: 40%;
+  }
+  
+  .search-form .form-control {
+    border-radius: 20px;
+  }
+  
+  .search-form .btn-outline-success {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 20px;
+  }
+  
+  .search-form .btn-outline-success:hover {
+    background-color: var(--accent-color);
+    color: white;
+  }
+  
+  h1 {
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--text-color);
+  }
+  
+  h2 {
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: start;
+    color: var(--accent-color);
+  }
+  
+  .hero-text > p {
+    font-size: 28px;
+    text-align: center;
+  }
+  
+  .navigasi {
+    border-bottom: 10px solid #fff;
+  }
+  
+  .navigasi > a {
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--accent-color);
+  }
+  
+  .welcome-section {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--accent-color);
+  }
+  
+  .image-container {
+    border-radius: 30px;
+    max-width: fit-content;
+    padding: 30px;
+    background-color: #fff;
+  }
+  

@@ -1,0 +1,101 @@
+    
+        /* Combined Card */
+        .combined-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+        }
+
+        .date-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 50%;
+            /* Adjusted width for two-column layout */
+        }
+
+        .date-button {
+            background-color: #f5d6e0;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 25px;
+            /* Pill shape */
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            width: 48%;
+            /* For 2-across layout */
+        }
+
+        .date-button:hover {
+            background-color: #ac3163;
+            color: white;
+        }
+
+        .date-button.active {
+            background-color: #a2375f;
+            color: white;
+        }
+
+        /* Time selection section next to date buttons */
+        .appointment-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .time-selection {
+            width: 45%;
+            /* Space for the time selection on the right */
+            background-color: #f9f3f3;
+            padding: 0 0 15px 0;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .time-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px;
+        }
+
+        .time-option span {
+            font-size: 16px;
+            color: #000;
+        }
+
+        .time-header {
+            border-radius: 100px;
+            background-color: #e6e6e6;
+            color: black;
+            font-weight: bold;
+            margin: 0;
+            padding: 10px;
+        }
+
+        /* Adjust button styles */
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .next-button {
+            background-color: #f5d6e0;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .next-button:hover {
+            background-color: #ac3163;
+        }
