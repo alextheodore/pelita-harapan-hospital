@@ -1,0 +1,166 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #fcefe9;
+  color: #5d5d5d;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  padding: 20px; /* Tambahkan padding di container */
+  position: relative; /* Agar elemen sidebar floating */
+}
+
+/* Floating Sidebar Styling */
+.sidebar {
+  width: 250px; /* Lebar sidebar */
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 30px; /* Curved edges */
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Floating shadow */
+  z-index: 100; /* Membuatnya berada di atas konten lain */
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo img {
+  width: 50px;
+}
+
+.logo h2 {
+  color: #a45161;
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+nav ul li {
+  margin-bottom: 25px;
+}
+
+nav ul li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #a45161;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav ul li a img {
+  margin-right: 10px;
+  width: 24px;
+  height: 24px;
+}
+
+nav ul li a:hover {
+  color: #ff7a87;
+}
+
+/* Main Content Styling */
+.main-content {
+  flex: 1;
+  margin-left: 260px; /* Tambah margin kiri untuk mengakomodasi sidebar */
+  padding: 30px;
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  color: #a45161;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-right input {
+  padding: 10px;
+  border: none;
+  border-radius: 50px;
+  background-color: #f5d9d3;
+  margin-right: 30px;
+  outline: none;
+}
+
+.header-right a {
+  color: #a45161;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 14px;
+}
+
+.header-right a:hover {
+  color: #ff7a87;
+}
+
+.hero-section {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section img {
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.hero-section p {
+  font-size: 16px;
+  color: #a45161;
+  line-height: 1.6;
+}
+
+/* Description Section */
+.description-section {
+  text-align: center;
+  background-color: #ffffff; /* White background for description */
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Space above the description section */
+}
+
+.description-section h2 {
+  color: #a45161; /* Title color */
+  margin-bottom: 15px; /* Space below title */
+}
+
+.description-section p {
+  font-size: 16px;
+  color: #5d5d5d; /* Description text color */
+  line-height: 1.6;
+}

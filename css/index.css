@@ -1,0 +1,106 @@
+:root {
+  --bg-color: #f9f3f3;
+  --text-color: #a2375f;
+  --accent-color: #e895b7;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0 20px 20px 100px;
+  padding: 10px;
+}
+
+.sidebar {
+  background-color: #fff;
+  text-align: center;
+  max-height: max-content;
+  max-width: 100%;
+  border-right: 1px solid #ccc;
+  color: var(--accent-color) !important;
+  border-radius: 30px;
+  margin-left: -80px;
+  margin-top: 10px;;
+}
+
+.sidebar img {
+  border-radius: 30px;
+  width: 40%;
+}
+
+.sidebar .nav-link {
+  color: var(--accent-color) !important;
+  font-weight: bold;
+  padding: 5px;
+  font-size: 18px;
+  border-radius: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+  background-color: var(--accent-color);
+  color: var(--text-color) !important;
+}
+
+.content {
+  background-color: var(--bg-color);
+  padding: 20px;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+.image-container {
+  border-radius: 30px;
+  max-width: fit-content;
+  padding: 30px;
+}
+
+.hospital-description {
+  background-color: #fff;
+  border-radius: 30px;
+  color: var(--accent-color);
+  text-align: center;
+  max-width: 1478px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.hospital-description p {
+  margin: 0;
+}
+
+.search-form {
+  flex-grow: 1;
+  max-width: 40%;
+}
+
+.search-form .form-control {
+  border-radius: 20px;
+}
+
+.search-form .btn-outline-success {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  border-radius: 20px;
+}
+
+.search-form .btn-outline-success:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.navigasi {
+  border-bottom: 10px solid #fff;
+  max-width: calc(100% - 40px);
+}
+
+.navigasi > a {
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--accent-color);
+}
