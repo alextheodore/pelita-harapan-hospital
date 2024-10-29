@@ -44,6 +44,8 @@
                                 <label><input type="radio" name="time" value="10.00 - 10.20"> 10.00 - 10.20</label><br>
                                 <label><input type="radio" name="time" value="10.30 - 11.00"> 10.30 - 11.00</label><br>
                             </div>
+                            <br>
+                            <p>Price: $50</p> 
                         </div>
                     </div>
                     <!-- Next Button -->

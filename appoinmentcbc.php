@@ -1,6 +1,23 @@
+<?php
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = ""; 
+$dbname = "hospital";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Query to fetch data
+$sql = "SELECT mr_number, patient_name, birth_date, gender, appointment_date, status FROM appointments";
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
     <meta charset="UTF-8" />
@@ -58,6 +75,43 @@
                     </div>
 
                     <a href="registration.php" class="back-btn">Back</a>
+                </div>
+
+                <!-- Report Table -->
+                <h1>Reporting</h1>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                         <thead class="table-primary">
+                                    <tr>
+                                        <th>MR Number</th>
+                                        <th>Patient Name</th>
+                                        <th>Birth Date</th>
+                                        <th>Gender</th>
+                                        <th>Appointment Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                         </thead>
+                        <tbody>
+                <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row['mr_number'] . "</td>";
+                            echo "<td>" . $row['patient_name'] . "</td>";
+                            echo "<td>" . $row['birth_date'] . "</td>";
+                            echo "<td>" . $row['gender'] . "</td>";
+                            echo "<td>" . $row['appointment_date'] . "</td>";
+                            echo "<td>" . $row['status'] . "</td>";
+                            echo "<td><a href='#' class='btn btn-primary btn-sm'>View</a></td>";
+                            echo "</tr>";
+                         }
+                    }   else {
+                            echo "<tr><td colspan='9'>No data found</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                    </table>
                 </div>
 
 
