@@ -163,6 +163,95 @@ if (!isset($_SESSION)) {
         font-size: 0.9em;
         margin-bottom: 10px;
     }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .header img {
+        width: 50px;
+        margin-bottom: 10px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .header p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .billing-info,
+    .services {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .billing-info div,
+    .services div {
+        width: 48%;
+    }
+
+    .services {
+        font-weight: bold;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0;
+    }
+
+    .total {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: right;
+        margin-top: 10px;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .footer div {
+        display: inline-block;
+        width: 45%;
+        text-align: center;
+        font-weight: bold;
+        padding: 10px 0;
+    }
+
+    .footer .date {
+        font-size: 14px;
+    }
+
+    .print-button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #a73b62;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: .3s ease;
+        text-decoration: none;
+        text-align: center ;
+    }
+
+    .print-button:hover {
+        background-color: #a73b62;
+        transition: .3s ease;
+    }
+
+    @media print {
+        .print-button {
+            display: none;
+        }
+    }
 </style>
 
 <body>
@@ -178,7 +267,7 @@ if (!isset($_SESSION)) {
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
                 <h1>Home</h1>
-                <h2>Patient Status > Cecilia Zevanya > Patient Info</h2>
+                <h2>Patient Status > Cecilia Zevanya > Patient Transaction</h2>
 
                 <br>
                 <br>
@@ -197,32 +286,68 @@ if (!isset($_SESSION)) {
 
                                 <!-- Patient Status Section -->
                                 <div class="patient-status">
-                                    <h6><strong>Patient Status:</strong> Queue / In / Out</h6>
+                                    <p><strong>Patient Status:</strong> Queue / In / Out</p>
                                 </div>
 
                                 <!-- Menu Section -->
                                 <div class="menu">
-                                    <a class="menu-item" href="patientinfo.php" style="text-decoration: none; background-color:#a73b62">
+                                    <a class="menu-item" href="patientinfo.php" style="text-decoration: none;">
                                         Patient Info <span class="arrow">></span>
                                     </a>
-                                    <a class="menu-item" href="transaction.php" style="text-decoration: none;">
+                                    <a class="menu-item" href="transaction.php" style="text-decoration: none; background-color:#a73b62">
                                         Patient Transaction <span class="arrow">></span>
                                     </a>
                                 </div>
                             </div>
                             <div class="details-card">
-                                <div class="section-title">PATIENT INFO</div>
-                                <p>NIK: 0101010101212200</p>
-                                <p>DOB: 29 Januari 2003</p>
-                                <p>No.Tlp: 087XXXXXXX</p>
-                                <p>No.BPJS: 0234556987656567</p>
-                                <p>Alamat: Perumahan permata Blok A3/45</p>
-                                <div class="section-title">Layanan Yang Digunakan:</div>
-                                <p>Konsultasi Spesialist Ortopedi</p>
-                                <p>Dokter: Dr.dr.AAAAAA, Sp.OT (K)</p>
-                                <p>Jam: 13:00 WIB</p>
-                                <div class="section-title">Imaging Test</div>
-                                <p>X-ray</p>
+                                <div class="header">
+                                    <img src="images/logo.png" alt="Logo">
+                                    <h1>PELITA HARAPAN HOSPITAL</h1>
+                                    <p>No.Tlp : (021) 543234555 Faxx : (021) 5432334455</p>
+                                    <p>Jln.Permata Buana No.34 Kabupaten Tangerang Selatan</p>
+                                </div>
+
+                                <div class="billing-info">
+                                    <div>
+                                        <p>No.RM : 01212003030</p>
+                                        <p>Nama : -</p>
+                                        <p>NIK : 0101010101212200</p>
+                                        <p>Tgl : 23 September 2024</p>
+                                    </div>
+                                    <div>
+                                        <p>No.Tlp : 087XXXXXXXX</p>
+                                        <p>No.BPJS : 023455698768756567</p>
+                                        <p>Alamat : Perumahan permata Blok A3/45</p>
+                                    </div>
+                                </div>
+
+                                <div class="services">
+                                    <div>
+                                        <p>Konsultasi Spesialist Ortopedi</p>
+                                        <p>Dr.dr.----, Sp.OT (K)</p>
+                                    </div>
+                                    <div>
+                                        <p>Rp. 250.000</p>
+                                    </div>
+                                </div>
+                                <div class="services">
+                                    <div>
+                                        <p>Penebusan Obat</p>
+                                        <p>Ibu Profen 0,5 mg</p>
+                                    </div>
+                                    <div>
+                                        <p>Rp. 50.000</p>
+                                    </div>
+                                </div>
+
+                                <div class="total">TOTAL: Rp. 300.000</div>
+
+                                <div class="footer">
+                                    <div>NAMA PETUGAS</div>
+                                    <div>NAMA PASIEN/KELUARGA</div>
+                                </div>
+                                <div class="footer date">Tanggal & Jam cetak: 23 September 2024; 14:00 WIB</div>
+                                <a class="print-button" href="paymenttransaction.php">Print Invoice</a>
                             </div>
                         </div>
                     </div>
