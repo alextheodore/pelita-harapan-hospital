@@ -107,6 +107,31 @@ CREATE TABLE `transaksi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 COMMIT;
 
+--
+--Table structure for table `appointments`
+--
+
+CREATE TABLE appointments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_name VARCHAR(100) NOT NULL,
+    appointment_type VARCHAR(50) NOT NULL,
+    doctor_name VARCHAR(100) NOT NULL,
+    room VARCHAR(50) NOT NULL,
+    date_of_entry DATE NOT NULL,
+    status VARCHAR(50) NOT NULL
+);
+
+--
+-- Dumping Data for table `appointments`
+--
+INSERT INTO appointments (patient_name, birth_date, gender, appointment_type, test_name, appointment_date, status, mr_number)
+VALUES
+    ('Neri Kwang', '1970-11-25', 'Female', 'Laboratory', 'Complete Blood Count', '2024-10-01', 'Confirmed', '25110'),
+    ('John Doe', '1985-05-15', 'Male', 'Radiology', 'Chest X-Ray', '2024-10-02', 'Pending', '25113'),
+    ('Jane Smith', '1985-06-15', 'Male', 'General', 'Radiology', '2024-11-01', 'Pending', '25111'),
+
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
