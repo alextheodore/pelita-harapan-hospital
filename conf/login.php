@@ -1,16 +1,14 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', '', 'hospital');
+include 'connection.php';
 
-if ($conn->connect_error) {
-    die('Connection Failed: ' . $conn->connect_error);
-}
+$conn = getConnection();
 
 $target_email = $_POST['email'];
-$taget_password = $_POST['password'];
+$target_password = $_POST['password'];
 
 $stmt = $conn->prepare("SELECT * FROM admin WHERE mobile_email = ? AND password = ?");
-$stmt->bind_param("ss", $target_email, $taget_password);
+$stmt->bind_param("ss", $target_email, $target_password);
 
 if ($stmt->execute()) {
     $result = $stmt->get_result();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2024 at 12:26 AM
+-- Generation Time: Oct 30, 2024 at 09:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pasien_registration`
+-- Database: `hospital`
 --
 
 -- --------------------------------------------------------
@@ -44,6 +44,36 @@ INSERT INTO `admin` (`id_number`, `password`, `mobile_email`, `fullname`, `usern
 (0, 'haha1234', 'haha@gmail.com', 'hahahihi', 'haha'),
 (0, 'coba1', 'coba1@gmail.com', 'cobacobi1', 'coba1'),
 (0, 'coba2', 'coba2@gmail.com', 'cobacobi2', 'coba2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointments`
+--
+
+CREATE TABLE `appointments` (
+  `appointment_id` int(11) NOT NULL,
+  `mr_number` varchar(10) NOT NULL,
+  `patient_name` varchar(100) NOT NULL,
+  `birth_date` date NOT NULL,
+  `gender` enum('Male','Female') NOT NULL,
+  `appointment_type` enum('Laboratory','Radiology','MCU','Other') NOT NULL,
+  `test_name` varchar(100) NOT NULL,
+  `appointment_date` date NOT NULL,
+  `status` enum('Confirmed','Pending','Completed','Cancelled') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `type` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`appointment_id`, `mr_number`, `patient_name`, `birth_date`, `gender`, `appointment_type`, `test_name`, `appointment_date`, `status`, `created_at`, `updated_at`, `type`) VALUES
+(1, '25110', 'Neri Kwang', '1970-11-25', 'Female', 'Laboratory', 'Complete Blood Count', '2024-10-01', 'Confirmed', '2024-10-29 20:54:11', '2024-10-29 20:54:11', NULL),
+(2, '25111', 'John Doe', '1985-05-15', 'Male', 'Radiology', 'Chest X-Ray', '2024-10-02', 'Pending', '2024-10-29 20:54:11', '2024-10-29 20:54:11', NULL),
+(3, '25112', 'Jane Smith', '1990-03-20', 'Female', 'MCU', 'Full Medical Checkup', '2024-10-03', 'Confirmed', '2024-10-29 20:54:11', '2024-10-29 20:54:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -105,32 +135,27 @@ CREATE TABLE `transaksi` (
   `Total_Tagihan` int(20) NOT NULL,
   `Jenis_Pembayaran` enum('bpjs','private','axsa','ocbc','manulife','prudential') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`appointment_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
-
---
---Table structure for table `appointments`
---
-
-CREATE TABLE appointments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    patient_name VARCHAR(100) NOT NULL,
-    appointment_type VARCHAR(50) NOT NULL,
-    doctor_name VARCHAR(100) NOT NULL,
-    room VARCHAR(50) NOT NULL,
-    date_of_entry DATE NOT NULL,
-    status VARCHAR(50) NOT NULL
-);
-
---
--- Dumping Data for table `appointments`
---
-INSERT INTO appointments (patient_name, birth_date, gender, appointment_type, test_name, appointment_date, status, mr_number)
-VALUES
-    ('Neri Kwang', '1970-11-25', 'Female', 'Laboratory', 'Complete Blood Count', '2024-10-01', 'Confirmed', '25110'),
-    ('John Doe', '1985-05-15', 'Male', 'Radiology', 'Chest X-Ray', '2024-10-02', 'Pending', '25113'),
-    ('Jane Smith', '1985-06-15', 'Male', 'General', 'Radiology', '2024-11-01', 'Pending', '25111'),
-
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
