@@ -28,7 +28,7 @@ if (!isset($_SESSION)) {
 
     <div class="email">
       <div class="sec-2">
-        <input type="text" name="mobile_email" placeholder="Mobile Number or Email">
+        <input type="text" name="email" placeholder="Mobile Number or Email">
       </div>
     </div>
 

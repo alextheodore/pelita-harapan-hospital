@@ -27,27 +27,28 @@
                 <h1>Registration - Unregistered Patient</h1>
                 <div class="col-md-9">
                     <div class="image-container mb-4">
-                        <form action="registration.php" method="POST">
+                        <h1 style="text-align: center;">Unregistered Patient Form</h1>
+                        <form action="conf/insert_patient.php" method="POST">
                             <div class="form-group">
-                                <input type="text" placeholder="Name">
+                                <input type="text" placeholder="Name" name="name">
                             </div>
                             <div class="form-group">
-                                <input type="date">
-                                <select name="gender"> 
+                                <input type="date" name="dob">
+                                <select name="gender">
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" placeholder="Phone number">
-                                <input type="text" placeholder="Phone number 2">
+                                <input type="text" placeholder="Phone number" name="phone">
+                                <input type="text" placeholder="BJPS Card Number (For BPJS Student)" name="bpjs_card">
                             </div>
                             <div class="form-group">
-                                <input type="text" placeholder="NIK">
-                                <input type="email" placeholder="Email">
+                                <input type="text" placeholder="NIK" name="nik">
+                                <input type="email" placeholder="Email" name="email">
                             </div>
                             <div class="form-group">
-                                <input type="text" placeholder="Address">
+                                <input type="text" placeholder="Address" name="address">
                             </div>
 
                             <button type="submit">Submit</button>

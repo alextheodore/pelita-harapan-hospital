@@ -24,16 +24,24 @@
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Registration - Registered Patient</h1>
-                <div class="col-md-9">
-                    <div class="image-container mb-4">
-                        <form action="registration.php" method="POST">
-                            <div class="form-group">
-                                <input type="text" placeholder="Name">
+                <h1 class="fw-medium">Registration > <span class="fw-bold">Registered Patient</span></h1>
+                <div class="">
+                    <div class="d-flex justify-content-center align-items-center bg-light flex-column w-100
+                                p-5" style="height: 450px">
+                        <h1>Registered Patient Form</h1>
+                        <br>
+                        <form action="conf/search_patient.php" method="POST" class="d-flex justify-content-center align-items-center flex-column">
+                            <div class="form-group w-100 flex justify-content-center">
+                                <input type="text" name="name" placeholder="Name according to KTP" style="width: 550px;">
                             </div>
                             <div class="form-group">
-                                <input type="text" placeholder="NIK">
+                                <input type="text" name="nik" placeholder="NIK according to KTP (16 digits)" style="width: 550px;">
                             </div>
+                            <?php if (isset($_SESSION['error'])) {
+                                echo '<div id="errorMessage" class="alert alert-danger animate__animated animate__fadeInDown" role="alert" style="background-color: #fe4949; color: white; text-align: center; margin: 20px auto; padding: 15px; border-radius: 5px;">'
+                                    . htmlspecialchars($_SESSION['error']) . '</div>';
+                                unset($_SESSION['error']);
+                            } ?>
                             <button type="submit">Submit</button>
                         </form>
                     </div>

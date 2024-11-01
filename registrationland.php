@@ -1,8 +1,3 @@
-<?php
-if (!isset($_SESSION)) {
-    session_start();
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +24,7 @@ if (!isset($_SESSION)) {
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Registration</h1>
+                <h1 class="fw-medium">Registration</h1>
                 <div class="welcome-section text-center p-0 my-4 d-flex flex-row justify-content-start align-items-top">
                     <img
                         src="images/image/ornament.png"
@@ -48,40 +43,20 @@ if (!isset($_SESSION)) {
                     </div>
                 </div>
 
-                <!-- Package Section -->
-                <div class="container overflow-hidden text-center">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <div class="image-container text-center mb-4">
-                                <h2 class="fs-2 mt-2">Registered Patient</h2>
-                                <div class="container-login100-form-btn">
-                                    <a href="registered.php">
-                                        <button class="login100-form-btn">
-                                            click here
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-9">
-                            <div class="image-container text-center mb-4">
-                                <h2 class="fs-2 mt-2">Unregistered Patient</h2>
-                                <div class="container-login100-form-btn">
-                                    <a href="unregistered.php">
-                                        <button class="login100-form-btn">
-                                            click here
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
+                <div class="d-flex justify-content-center w-100 flex-row gap-5 align-items-center">
+                    <a href="registered.php" class="custom-box w-100 p-5 rounded d-flex flex-column justify-content-center align-items-center" style="height:350px">
+                        <h2 class="fs-2 mt-2">Registered Patient</h2>
+                    </a>
+                    <a href="unregistered.php" class="custom-box w-100 p-5 rounded d-flex flex-column justify-content-center align-items-center" style="height:350px">
+                        <h2 class="fs-2 mt-2">Unregistered Patient</h2>
+                    </a>
                 </div>
+                </a>
             </div>
         </div>
+    </div>
+    </div>
+    </div>
     </div>
 </body>
 

@@ -1,3 +1,4 @@
+<?php include 'conf/session_check.php'; ?>
 <div
     class="col-md-2 sidebar d-flex flex-column align-items-center py-3">
     <a href="index.php">
