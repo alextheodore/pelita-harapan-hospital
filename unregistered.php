@@ -24,7 +24,7 @@
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Registration - Unregistered Patient</h1>
+                <h1 class="fw-medium">Registration > <span class="fw-bold">Unregistered Patient</span></h1>
                 <div class="col-md-9">
                     <div class="image-container mb-4">
                         <h1 style="text-align: center;">Unregistered Patient Form</h1>

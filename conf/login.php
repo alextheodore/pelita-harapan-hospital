@@ -7,6 +7,8 @@ $conn = getConnection();
 $target_email = $_POST['email'];
 $target_password = $_POST['password'];
 
+echo $target_email, $target_password;
+
 $stmt = $conn->prepare("SELECT * FROM msadmin WHERE email = ? AND password = ?");
 $stmt->bind_param("ss", $target_email, $target_password);
 

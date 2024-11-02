@@ -158,10 +158,10 @@ input::placeholder {
 }
 
 .appointment-container {
-    background-color: #fbeff0;
+    background-color: white;
     padding: 20px;
     border-radius: 12px;
-    width: 400px;
+    width: 100%;
     margin: auto;
     font-family: Arial, sans-serif;
 }
@@ -181,13 +181,13 @@ input::placeholder {
 
 .doctor-details h2 {
     margin: 0;
-    font-size: 20px;
+    font-size: 26px;
     color: #620033;
 }
 
 .doctor-details .specialty {
     margin: 0;
-    font-size: 14px;
+    font-size: 17px;
     color: #b24c66;
 }
 
@@ -228,7 +228,8 @@ input::placeholder {
 }
 
 .next-btn {
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     background-color: #e4b5c1;
     border: none;
     padding: 10px 20px;
@@ -236,8 +237,11 @@ input::placeholder {
     cursor: pointer;
     color: white;
     font-weight: bold;
+    text-decoration: none;
+    transition: .3s ease;
 }
 
 .next-btn:hover {
     background-color: #c48894;
+    transition: .3s ease;
 }

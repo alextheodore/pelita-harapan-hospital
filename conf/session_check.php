@@ -6,7 +6,7 @@ session_start();
 
 $currentFile = basename($_SERVER['PHP_SELF']);
 
-if (!isset($_SESSION['user_id']) && $currentFile !== 'homepage.php' && $currentFile !== 'home.php') {
+if (!isset($_SESSION['user_id']) && ($currentFile !== 'homepage.php' || $currentFile !== 'home.php')) {
     header("Location: index.php");
     exit();
 }

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,8 +8,7 @@
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet" />
-    <link rel="stylesheet" href="css/book.css" />
-    <link rel="stylesheet" href="css/registrationland.css" />
+    <link rel="stylesheet" href="css/appoinment.css" />
 </head>
 
 <body>
@@ -25,7 +23,17 @@
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1 class="fw-medium">Registration > <span class="fw-bold">Book Appointment</span></h1>
+                <h1 class="fw-medium">Registration > Book Appointment > <?php 
+                 if($_SESSION['specialist'] == "Specialist"){
+                    echo "Specialist > ";
+                 }
+                 else{
+
+                 }
+                 ?>
+                 <span class="fw-bold">
+                    <?php echo $_SESSION['specialist'] ?>
+                </span></h1>
                 <div class="welcome-section text-center p-0 my-4 d-flex flex-row justify-content-start align-items-top">
                     <img src="images/image/ornament.png" class="img-fluid" width="200" alt="Logo" style="margin-left: -30px; margin-top: -15px;" />
                     <div class="hero-text flex-fill">
@@ -43,14 +51,28 @@
                         </ul>
                     </div>
                 </div>
+                <div class="confirmation-container d-flex justify-content-center align-items-center text-center">
+                    <img src="images/checkmark.jpg" alt="Confirmed">
+                    <h2>Book Confirmed</h2>
+                    <div class="d-flex justify-content-center flex-row align-items-center text-center p-3 gap-5" style="text-align: center;">
+                        <div>
+                            <?php
+                            $details = json_decode(urldecode($_GET['details']), true);
+                            $dateTime = new DateTime($details['date']);
+                            $formattedTime = $dateTime->format('H:i') . ' WIB';
 
-                <div class="d-flex justify-content-center w-100 flex-row gap-5 align-items-center">
-                    <a href="specialist.php" class="custom-box w-100 p-5 rounded d-flex flex-column justify-content-center align-items-center" style="height:350px">
-                        <h2 class="fs-2 mt-2">Specialist</h2>
-                    </a>
-                    <a href="conf/get_doctors.php?specialist=General" class="custom-box w-100 p-5 rounded d-flex flex-column justify-content-center align-items-center" style="height:350px">
-                        <h2 class="fs-2 mt-2">General Practicioner</h2>
-                    </a>
+                            $formattedDate = $dateTime->format('F j, Y');
+                            ?>
+                            <h2 style="text-align: center;"> <?php echo $formattedTime; ?></h2>
+                            <h3 style="text-align: center;"> <?php echo $formattedDate ?></h3>
+                        </div>
+                        <div style="width: 2px; height: 100px; background-color: black; margin: 0 auto;"></div>
+                        <div>
+                            <h2 style="text-align: center;"> <?php echo $details['name']; ?></h2>
+                            <h3 style="text-align: center;"> <?php echo $_SESSION['selectedSpecialist'] ?></h3>
+                        </div>
+                    </div>
+                    <a href="registration.php" class="back-btn">Back</a>
                 </div>
             </div>
         </div>

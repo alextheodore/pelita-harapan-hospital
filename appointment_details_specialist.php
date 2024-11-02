@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
  <html lang="en">
 
 
@@ -41,9 +41,19 @@
 
                  <?php include 'topbar.php' ?>
                  <!-- Welcome Section -->
-                 <h1 class="fw-medium">Registration > Book Appointment > <span class="fw-bold">General Practicioner</span></h1>
+                 <h1 class="fw-medium">Registration > Book Appointment > <?php 
+                 if($_SESSION['specialist'] == "Specialist"){
+                    echo "Specialist > ";
+                 }
+                 else{
+
+                 }
+                 ?>
+                 <span class="fw-bold">
+                    <?php echo $_GET['specialist'] . " Practicioner" ?>
+                </span></h1>
                  <div style="background-color: white;" class="d-flex justify-content-center flex-column align-items-center">
-                     <h2 class="text-center m-3 p-3">Choose your general doctor!</h2>
+                     <h2 class="text-center m-3 p-3">Choose your specialist doctor!</h2>
                      <input type="text" id="searchInput" placeholder="Search doctor..." class="form-control mb-3" style="width: 300px;" oninput="filterDoctors()">
                      <div class="row" id="serviceList">
                          <?php foreach ($_SESSION['doctors'] as $doctor): ?>
@@ -54,7 +64,7 @@
                                     'name' => $doctor['name']
                                 ]);
                                 $_SESSION['selectedDoctor'] = $doctorDetails;
-                                // $_SESSION['selectedSpecialist'] = $_GET['specialist'];
+                                $_SESSION['selectedSpecialist'] = $_GET['specialist'];
                                 $encodedDoctorDetails = urlencode($doctorDetails);
                                 ?>
                              <div class="col-md-4 mb-4">

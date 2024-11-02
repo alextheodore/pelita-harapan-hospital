@@ -1,3 +1,11 @@
+<?php
+if (isset($_GET['service'])) {
+    // Decode the JSON object from the URL
+    $serviceDetails = json_decode(urldecode($_GET['service']), true);
+} else {
+    $serviceDetails = null; // Set to null if no service details are provided
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,28 +32,24 @@
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Registration - Medical Check Up</h1>
+                <h1 class="fw-medium">Registration > Medical Checkup > <span class="fw-bold"><?php echo $serviceDetails['name']?></span></h1>
                 <div class="package-container">
                     <img src="images/mcuu.png" alt="Stroke Screening Package">
 
                     <div class="package-details">
-                        <h2>Stroke Screening Package</h2>
+                        <h2><?php echo $serviceDetails['name']?></h2>
                         <p><strong>Includes:</strong></p>
                         <ul>
-                            <li>Consultation with a Neurologist or Neurosurgeon</li>
-                            <li>Doppler Carotid Ultrasound</li>
-                            <li>Laboratory examination</li>
+                            <li><?php echo $serviceDetails['description'][0]?></li>
+                            <li><?php echo $serviceDetails['description'][1]?></li>
+                            <li><?php echo $serviceDetails['description'][2]?></li>
                         </ul>
-                        <p class="price">Rp. 1.399.000</p>
+                        <p class="price" style="font-size: 32px;">Rp. <?php echo number_format($serviceDetails['price'], 0, ',', '.'); ?></p>
+
 
                         <a href="appoinmentmcu.php" class="book-now-btn">Book Now</a>
                     </div>
                 </div>
-
-
-
-
-
             </div>
         </div>
     </div>

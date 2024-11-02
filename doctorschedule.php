@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,54 +23,71 @@
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Registration - Book Appointment - Specialist </h1>
+                <h1 class="fw-medium">Registration > Book Appointment > <?php 
+                 if($_SESSION['specialist'] == "Specialist"){
+                    echo "Specialist > ";
+                 }
+                 else{
 
+                 }
+                 ?>
+                 <span class="fw-bold">
+                 <?php echo $_GET['specialist'] . " Practicioner" ?>
+                </span></h1>
                 <div class="appointment-container">
                     <div class="doctor-info">
                         <img src="images/gambar_dokter.png" alt="Dr. Austa Mia">
                         <div class="doctor-details">
-                            <h2>dr. Austa Mia, Sp.OT</h2>
-                            <p class="specialty">Orthopedics</p>
+                            <?php
+                            $doctorDetails = json_decode($_GET['doctor'], true);
+                            $_SESSION['selectedDoctor'] = $doctorDetails;
+                            ?>
+                            <h2><?php echo $doctorDetails['id'], " | ", $doctorDetails['name'] ?></h2>
+                            <p class="specialty"><?php echo  $_GET['specialist'] ?></p>
                         </div>
                     </div>
+                    <div style="width: 100%; height: 2px; background-color: #E84C88; margin: 20px 0;"></div>
 
                     <div class="schedule-section">
-                        <h3>Schedule & Make Appointments</h3>
-                        <div class="dates">
-                            <label for="appointment-date">Select Date: </label>
-                            <input type="date" id="appointment-date" name="appointment-date">
-                        </div>
+                        <h3 style="color: #E84C88; font-size: 20px; text-align: center; margin-bottom: 15px">Schedule & Make Appointments</h3>
 
-                        <div class="time-slots">
-                            <table>
-                                <tr>
-                                    <td>09.00 - 09.20</td>
-                                    <td><input type="radio" name="time" value="09:00"></td>
-                                </tr>
-                                <tr>
-                                    <td>09.30 - 09.50</td>
-                                    <td><input type="radio" name="time" value="09:30"></td>
-                                </tr>
-                                <tr>
-                                    <td>10.00 - 10.20</td>
-                                    <td><input type="radio" name="time" value="10:00"></td>
-                                </tr>
-                                <tr>
-                                    <td>10.30 - 11.00</td>
-                                    <td><input type="radio" name="time" value="10:30"></td>
-                                </tr>
-                            </table>
-                        </div>
+                        <form action="conf/create_appointment.php" method="POST">
+                            <div class="dates d-flex flex-column align-items-center">
+                                <label for="appointment-date">Select Date: </label>
+                                <input type="date" id="appointment-date" name="appointment_date" required>
+                            </div>
 
-                        <button class="next-btn" onclick="location.href='appoinment.php'">Next</button>
+                            <div class="time-slots w-100">
+                                <table>
+                                    <tr>
+                                        <td>09.00 - 09.20</td>
+                                        <td><input type="radio" name="time_slot" value="09:00" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>09.30 - 09.50</td>
+                                        <td><input type="radio" name="time_slot" value="09:30"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10.00 - 10.20</td>
+                                        <td><input type="radio" name="time_slot" value="10:00"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10.30 - 11.00</td>
+                                        <td><input type="radio" name="time_slot" value="10:30"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+                            <button type="submit" class="next-btn">Next</button>
+                        </form>
+
                     </div>
+
+
+
                 </div>
-
-
-
             </div>
         </div>
-    </div>
 </body>
 
 </html>
