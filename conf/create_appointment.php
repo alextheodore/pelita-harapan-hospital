@@ -34,10 +34,9 @@ $doctorDetails = $_SESSION['selectedDoctor'];
 
 $stmt = $conn->prepare("INSERT INTO msappointment (appointment_id, doctor_id, patient_id, date, status, price) VALUES (?, ?, ?, ?, ?, ?)");
 
-// Make sure price is an integer
-$price = 300000; // This is already correct
+$price = 300000;
 $status = "Confirmed";
-// Adjust bind_param to use the correct types
+
 $stmt->bind_param("ssssss", $newId, $doctorDetails['id'], $_SESSION['patient_id'], $datetime, $status, $price);
 
 // Execute the statement

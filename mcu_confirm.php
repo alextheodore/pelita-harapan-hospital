@@ -17,6 +17,15 @@ $formattedDate = $dateTime->format('F j, Y');
         rel="stylesheet" />
     <link rel="stylesheet" href="css/appoinment.css" />
 </head>
+<style>
+    .flex-item {
+        text-align: center;
+        flex: 1;
+        /* This will make all flex items grow equally */
+        max-width: 300px;
+        /* Set a maximum width for each item */
+    }
+</style>
 
 <body>
     <div class="container-fluid">
@@ -51,16 +60,24 @@ $formattedDate = $dateTime->format('F j, Y');
                 <div class="confirmation-container d-flex justify-content-center align-items-center text-center">
                     <img src="images/checkmark.jpg" alt="Confirmed">
                     <h2>Book Confirmed</h2>
-                    <div class="d-flex justify-content-center flex-row align-items-center text-center p-3 gap-5" style="text-align: center;">
-                        <div>
-
-                            <h2 style="text-align: center;"> <?php echo $formattedTime; ?></h2>
-                            <h3 style="text-align: center;"> <?php echo $formattedDate ?></h3>
+                    <div class="d-flex justify-content-center flex-row align-items-center text-center p-3 gap-5">
+                        <div class="flex-item" style="max-width: 300px; width: 100%; text-align: center;">
+                            <h2><?php echo $details['name']; ?></h2>
                         </div>
-                        <div style="width: 2px; height: 100px; background-color: black; margin: 0 auto;"></div>
-                        <div>
-                            <h2 style="text-align: center;"> <?php echo $details['name']; ?></h2>
-                            <h3 style="text-align: center;"> <?php echo $_SESSION['selectedSpecialist'] ?></h3>
+                        <div style="width: 2px; height: 100px; background-color: black;"></div>
+                        <div class="flex-item" style="max-width: 300px; width: 100%;">
+                            <?php
+                            $details = json_decode(urldecode($_GET['details']), true);
+                            $dateTime = new DateTime($details['date']);
+                            $formattedTime = $dateTime->format('H:i') . ' WIB';
+                            $formattedDate = $dateTime->format('F j, Y');
+                            ?>
+                            <h2 style="text-align: center;"><?php echo $formattedTime; ?></h2>
+                            <h3 style="text-align: center;"><?php echo $formattedDate; ?></h3>
+                        </div>
+                        <div style="width: 2px; height: 100px; background-color: black;"></div>
+                        <div class="flex-item" style="max-width: 300px; width: 100%;">
+                            <h3>Status: <br>Confirmed</h3>
                         </div>
                     </div>
                     <a href="registration.php" class="back-btn">Back</a>

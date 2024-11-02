@@ -9,7 +9,7 @@ $allServices = [
             'Mammography',
             'Breast Ultrasound',
         ],
-        'price' => '1499000'
+        'price' => 1499000,
     ],
     [
         'id' => 2,
@@ -20,7 +20,7 @@ $allServices = [
             'Electrocardiogram (ECG)',
             'Echocardiogram',
         ],
-        'price' => '2499000'
+        'price' => 2499000,
     ],
     [
         'id' => 3,
@@ -31,7 +31,7 @@ $allServices = [
             'Doppler Carotid Ultrasound',
             'Laboratory examination',
         ],
-        'price' => '1999000'
+        'price' => 1999000,
     ],
     [
         'id' => 4,
@@ -42,7 +42,7 @@ $allServices = [
             'Blood tests and screening',
             'Physical examination',
         ],
-        'price' => '1450000'
+        'price' => 1450000,
     ],
     [
         'id' => 5,
@@ -53,7 +53,7 @@ $allServices = [
             'Pap Smear Test',
             'HPV Testing',
         ],
-        'price' => '2599000'
+        'price' => 2599000,
     ],
     [
         'id' => 6,
@@ -64,8 +64,8 @@ $allServices = [
             'Endoscopy',
             'Colonoscopy',
         ],
-        'price' => '3499000'
-    ]
+        'price' => 3499000,
+    ],
 ];
 ?>
 
@@ -119,15 +119,15 @@ $allServices = [
                         <?php foreach ($allServices as $service): ?>
                             <div class="col-md-4 mb-4">
                                 <?php
-                                // Create a JSON object for the service details
                                 $serviceDetails = json_encode([
                                     'id' => $service['id'],
                                     'name' => $service['name'],
-                                    'image' => str_replace('\\', '/', $service['image']), // Replace backslashes with forward slashes
+                                    'image' => $service['image'],
                                     'description' => $service['description'],
                                     'price' => $service['price'],
                                 ]);
-                                $encodedServiceDetails = urlencode($serviceDetails); // Ensure the JSON is URL-encoded
+                                $encodedServiceDetails = urlencode($serviceDetails); 
+                                $_SESSION['test'] = $serviceDetails;
                                 ?>
                                 <a href="mcu_details.php?service=<?php echo $encodedServiceDetails; ?>" style="text-decoration: none; color: inherit;">
                                     <div class="service-item d-flex justify-content-center align-items-center p-3 rounded m-4" style="height: 150px; min-width: 200px;">
