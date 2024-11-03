@@ -60,6 +60,25 @@
         height: 20px;
     }
 
+    /* Date picker Section */
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .date-picker form {
+        display: flex;
+        align-items: center;
+    }
+
+    .date-picker label {
+        margin-right: 10px;
+    }
+    
+    
+
     .patient-status p {
         margin: 0;
         font-size: 14px;
@@ -148,8 +167,51 @@
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h2>Patient Status</h2>
-                <div class="d-flex flex-column align-items-center justify-content-between ma w-100">
+                 <!-- Title and Date Picker Section -->
+                 <div class="header-section">
+                    <h2 class="patient-status">Patient Status</h2>
+                    <div class="date-picker">
+                        <form method="GET" action="conf/get_appointment.php">
+                            <label for="date">Select a Date:</label>
+                            <input type="date" id="date" name="date" value="<?php echo isset($_SESSION['selected_date']) ? $_SESSION['selected_date'] : date('Y-m-d'); ?>" required>
+                            <button type="submit" class="btn btn-primary ms-2">Filter</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Appointments Section -->
+                <div class="appointments-section mt-4">
+                    <?php if (isset($_SESSION['appointments']) && count($_SESSION['appointments']) > 0): ?>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Appointment ID</th>
+                                    <th>Doctor ID</th>
+                                    <th>Patient_ID</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($_SESSION['appointments'] as $appointment): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($appointment['appointment_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($appointment['doctor_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($appointment['patient_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($appointment['date']); ?></td>
+                                        <td><?php echo htmlspecialchars($appointment['status']); ?></td>
+                                        <td><?php echo htmlspecialchars($appointment['price']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p class="text-center">No appointments found for the selected date.</p>
+                    <?php endif; ?>
+                </div>
+
+                <!-- <div class="d-flex flex-column align-items-center justify-content-between ma w-100">
                     <a href="patientinfo.php" class="d-flex justify-content-between bg-white w-100 align-items-center mt-3 mb-3 rounded p-3 text-decoration-none" style="color: inherit;">
                         <h4 style="margin-bottom: 0px;">Marchella</h4>
                         <div class="d-flex flex-column align-items-center justify-content-center">
@@ -171,7 +233,7 @@
                             <h6>A - 03</h6>
                         </div>
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
