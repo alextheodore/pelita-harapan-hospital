@@ -1,7 +1,32 @@
 <?php
-if (!isset($_SESSION)) {
-    session_start();
+// Include database connection
+include 'conf/connection.php';
+$conn = getConnection();
+
+// Get patient_id from URL
+$patient_id = $_GET['patient_id'] ?? 'PA001';
+
+if (!$patient_id) {
+    echo "No patient ID specified.";
+    exit;
 }
+
+// Fetch patient details
+$patientQuery = $conn->prepare("SELECT * FROM MsPatient WHERE patient_id = ?");
+$patientQuery->bind_param("s", $patient_id);
+$patientQuery->execute();
+$patientResult = $patientQuery->get_result();
+$patient = $patientResult->fetch_assoc();
+
+// Fetch transaction headers for the patient
+$transactionHeaderQuery = $conn->prepare("
+    SELECT * FROM TransactionHeader 
+    WHERE patient_id = ?
+");
+$transactionHeaderQuery->bind_param("s", $patient_id);
+$transactionHeaderQuery->execute();
+$transactionHeaders = $transactionHeaderQuery->get_result();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,246 +40,10 @@ if (!isset($_SESSION)) {
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet" />
     <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/transaction.css" />
 </head>
-<style>
-    .actions {
-        display: flex;
-        align-items: center;
-    }
-
-    .actions button {
-        background-color: transparent;
-        border: none;
-        color: #a73b62;
-        margin-right: 15px;
-        cursor: pointer;
-    }
-
-    .user {
-        display: flex;
-        align-items: center;
-    }
-
-    .user img {
-        width: 30px;
-        margin-right: 5px;
-    }
-
-    /* Patient Info Section */
-    .patient-info {
-        background-color: #f5f5f5;
-        padding: 20px;
-        border-radius: 20px;
-        margin-bottom: 20px;
-        text-align: center;
-        width: 250px;
-        height: 55px;
-        display: flex;
-        align-items: center;
-    }
-
-    .avatar {
-        width: 60px;
-        height: 60px;
-        background-color: #ccc;
-        border-radius: 50%;
-        margin-right: 15px;
-    }
-
-    .details h3 {
-        margin: 0;
-    }
-
-    .details p {
-        margin: 5px 0;
-    }
-
-    .gender-badge {
-        background-color: #ffb6c1;
-        color: white;
-        padding: 3px 10px;
-        border-radius: 15px;
-        font-size: 14px;
-        display: inline-block;
-    }
-
-    /* Patient Status Section */
-    .patient-status {
-        background-color: #f5f5f5;
-        padding: 17px;
-        border-radius: 20px;
-        margin-bottom: 20px;
-        text-align: center;
-        width: 250px;
-        height: 20px;
-    }
-
-    .patient-status p {
-        margin: 0;
-        font-size: 14px;
-    }
-
-    /* Menu Section */
-    .menu {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .menu-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px;
-        background-color: #ffb6c1;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        width: 275px;
-        height: 25px;
-    }
-
-    .menu-item.active {
-        background-color: #ff6699;
-    }
-
-    .arrow {
-        font-weight: bold;
-
-    }
-
-    .details-card {
-        background-color: white;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%;
-    }
-
-    .patient-card .status {
-        margin-top: 10px;
-    }
-
-    .patient-card img {
-        width: 80px;
-        border-radius: 50%;
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    .status span {
-        background-color: #e2a2a2;
-        padding: 5px 10px;
-        border-radius: 10px;
-        color: white;
-    }
-
-    .details-card .section-title {
-        font-weight: bold;
-        margin-top: 15px;
-        border-bottom: 2px solid #e2a2a2;
-        padding-bottom: 5px;
-    }
-
-    .details-card .note {
-        color: red;
-        font-size: 0.9em;
-        margin-bottom: 10px;
-    }
-
-    .header {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .header img {
-        width: 50px;
-        margin-bottom: 10px;
-    }
-
-    .header h1 {
-        font-size: 24px;
-        margin: 0;
-    }
-
-    .header p {
-        margin: 5px 0;
-        font-size: 14px;
-    }
-
-    .billing-info,
-    .services {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
-
-    .billing-info div,
-    .services div {
-        width: 48%;
-    }
-
-    .services {
-        font-weight: bold;
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-        padding: 10px 0;
-    }
-
-    .total {
-        font-size: 18px;
-        font-weight: bold;
-        text-align: right;
-        margin-top: 10px;
-    }
-
-    .footer {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .footer div {
-        display: inline-block;
-        width: 45%;
-        text-align: center;
-        font-weight: bold;
-        padding: 10px 0;
-    }
-
-    .footer .date {
-        font-size: 14px;
-    }
-
-    .print-button {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
-        background-color: #a73b62;
-        color: white;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 5px;
-        transition: .3s ease;
-        text-decoration: none;
-        text-align: center ;
-    }
-
-    .print-button:hover {
-        background-color: #a73b62;
-        transition: .3s ease;
-    }
-
-    @media print {
-        .print-button {
-            display: none;
-        }
-    }
-</style>
-
 <body>
+    
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
@@ -267,7 +56,7 @@ if (!isset($_SESSION)) {
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
                 <h1>Home</h1>
-                <h2>Patient Status > Cecilia Zevanya > Patient Transaction</h2>
+                <h1 class="fw-medium">Registration > Patient Info > <span class="fw-bold">Medical Check Up</span></h1>
 
                 <br>
                 <br>
@@ -278,18 +67,11 @@ if (!isset($_SESSION)) {
                                 <div class="patient-info">
                                     <div class="avatar"></div>
                                     <div class="details">
-                                        <h3>NAMA</h3>
-                                        <p>No. Antrian: <strong>A-01</strong></p>
-                                        <div class="gender-badge">Female</div>
+                                        <h3><?= htmlspecialchars($patient['name']) ?></h3>
+                                        <p>No. Antrian: A-01</p>
+                                        <div class="gender-badge"><?= htmlspecialchars($patient['gender']) ?></div>
                                     </div>
                                 </div>
-
-                                <!-- Patient Status Section -->
-                                <div class="patient-status">
-                                    <p><strong>Patient Status:</strong> Queue / In / Out</p>
-                                </div>
-
-                                <!-- Menu Section -->
                                 <div class="menu">
                                     <a class="menu-item" href="patientinfo.php" style="text-decoration: none;">
                                         Patient Info <span class="arrow">></span>
@@ -299,55 +81,131 @@ if (!isset($_SESSION)) {
                                     </a>
                                 </div>
                             </div>
-                            <div class="details-card">
-                                <div class="header">
-                                    <img src="images/logo.png" alt="Logo">
-                                    <h1>PELITA HARAPAN HOSPITAL</h1>
-                                    <p>No.Tlp : (021) 543234555 Faxx : (021) 5432334455</p>
-                                    <p>Jln.Permata Buana No.34 Kabupaten Tangerang Selatan</p>
+                            <div class="invoice-container">
+                                <div class="invoice-header">
+                                    <h1>Invoice</h1>
+                                    <p>Pelita Harapan Hospital</p>
+                                    <p>Jl. Example Street No.123, Jakarta, Indonesia</p>
                                 </div>
 
-                                <div class="billing-info">
-                                    <div>
-                                        <p>No.RM : 01212003030</p>
-                                        <p>Nama : -</p>
-                                        <p>NIK : 0101010101212200</p>
-                                        <p>Tgl : 23 September 2024</p>
-                                    </div>
-                                    <div>
-                                        <p>No.Tlp : 087XXXXXXXX</p>
-                                        <p>No.BPJS : 023455698768756567</p>
-                                        <p>Alamat : Perumahan permata Blok A3/45</p>
-                                    </div>
+                                <div class="section-title">Patient Information</div>
+                                <div class="invoice-details">
+                                    <p><strong>Name:</strong> <?= htmlspecialchars($patient['name']) ?></p>
+                                    <p><strong>NIK:</strong> <?= htmlspecialchars($patient['nik']) ?></p>
+                                    <p><strong>DOB:</strong> <?= htmlspecialchars($patient['dob']) ?></p>
+                                    <p><strong>Phone:</strong> <?= htmlspecialchars($patient['phone']) ?></p>
+                                    <p><strong>BPJS Number:</strong> <?= htmlspecialchars($patient['bpjs_card']) ?></p>
+                                    <p><strong>Address:</strong> <?= htmlspecialchars($patient['address']) ?></p>
                                 </div>
 
-                                <div class="services">
-                                    <div>
-                                        <p>Konsultasi Spesialist Ortopedi</p>
-                                        <p>Dr.dr.----, Sp.OT (K)</p>
-                                    </div>
-                                    <div>
-                                        <p>Rp. 250.000</p>
-                                    </div>
-                                </div>
-                                <div class="services">
-                                    <div>
-                                        <p>Penebusan Obat</p>
-                                        <p>Ibu Profen 0,5 mg</p>
-                                    </div>
-                                    <div>
-                                        <p>Rp. 50.000</p>
-                                    </div>
-                                </div>
+                                <div class="section-title">Service Details</div>
+                                <?php if ($transactionHeaders->num_rows > 0): ?>
+                                    <table class="invoice-table table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Service</th>
+                                                <th>Price (Rp)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $totalPrice = 0;
 
-                                <div class="total">TOTAL: Rp. 300.000</div>
+                                            while ($transaction = $transactionHeaders->fetch_assoc()):
+                                                $transactionDetailsQuery = $conn->prepare("SELECT details_id FROM TransactionDetail WHERE transaction_id = ?");
+                                                $transactionDetailsQuery->bind_param("s", $transaction['transaction_id']);
+                                                $transactionDetailsQuery->execute();
+                                                $transactionDetails = $transactionDetailsQuery->get_result();
 
-                                <div class="footer">
-                                    <div>NAMA PETUGAS</div>
-                                    <div>NAMA PASIEN/KELUARGA</div>
-                                </div>
-                                <div class="footer date">Tanggal & Jam cetak: 23 September 2024; 14:00 WIB</div>
-                                <a class="print-button" href="paymenttransaction.php">Print Invoice</a>
+                                                while ($detail = $transactionDetails->fetch_assoc()) {
+                                                    $details_id = $detail['details_id'];
+                                                    $serviceOutput = "";
+                                                    $price = 0; // Initialize price for this service
+                                                    switch (substr($details_id, 0, 1)) {
+                                                        case '6':
+                                                        case '7':
+                                                        case '8':
+                                                            $roomDetailsQuery = $conn->prepare("SELECT code, room_id FROM MsRoomDetails WHERE patient_id = ? AND code = ?");
+                                                            $roomDetailsQuery->bind_param("ss", $patient_id, $details_id);
+                                                            $roomDetailsQuery->execute();
+                                                            $roomDetails = $roomDetailsQuery->get_result()->fetch_assoc();
+
+                                                            if ($roomDetails) {
+                                                                $code = $roomDetails['code'];
+                                                                $room_id = $roomDetails['room_id'];
+
+                                                                $roomHeaderQuery = $conn->prepare("SELECT price FROM MsRoomHeader WHERE room_id = ?");
+                                                                $roomHeaderQuery->bind_param("s", $room_id);
+                                                                $roomHeaderQuery->execute();
+                                                                $roomHeader = $roomHeaderQuery->get_result()->fetch_assoc();
+
+                                                                if ($roomHeader) {
+                                                                    $price = $roomHeader['price'];
+                                                                    $serviceOutput = "Room Code: " . htmlspecialchars($code);
+                                                                }
+                                                            }
+                                                            break;
+
+                                                        default:
+                                                            break;
+                                                    }
+
+                                                    $prefix = substr($details_id, 0, 2);
+
+                                                    switch ($prefix) {
+                                                        case 'AP':
+                                                            $appointmentQuery = $conn->prepare("SELECT date, price FROM MsAppointment WHERE appointment_id = ?");
+                                                            $appointmentQuery->bind_param("s", $details_id);
+                                                            $appointmentQuery->execute();
+                                                            $appointment = $appointmentQuery->get_result()->fetch_assoc();
+                                                            $price = $appointment['price'];
+                                                            $serviceOutput = "Appointment on " . htmlspecialchars($appointment['date']);
+                                                            break;
+
+                                                        case 'MC':
+                                                            $checkupQuery = $conn->prepare("SELECT date, details, price FROM MsCheckup WHERE checkup_id = ?");
+                                                            $checkupQuery->bind_param("s", $details_id);
+                                                            $checkupQuery->execute();
+                                                            $checkup = $checkupQuery->get_result()->fetch_assoc();
+                                                            $price = $checkup['price'];
+                                                            $serviceOutput = "Checkup on " . htmlspecialchars($checkup['date']) . " - Details: " . htmlspecialchars($checkup['details']);
+                                                            break;
+
+                                                        case 'EM':
+                                                            $emergencyQuery = $conn->prepare("SELECT actions FROM MsEmergency WHERE emergency_id = ?");
+                                                            $emergencyQuery->bind_param("s", $details_id);
+                                                            $emergencyQuery->execute();
+                                                            $emergency = $emergencyQuery->get_result()->fetch_assoc();
+                                                            $serviceOutput = "Emergency Action: " . htmlspecialchars($emergency['actions']);
+                                                            break;
+
+                                                        case 'TE':
+                                                            $testQuery = $conn->prepare("SELECT name, price FROM MsTest WHERE test_id = ?");
+                                                            $testQuery->bind_param("s", $details_id);
+                                                            $testQuery->execute();
+                                                            $test = $testQuery->get_result()->fetch_assoc();
+                                                            $price = $test['price'];
+                                                            $serviceOutput = "Test Name: " . htmlspecialchars($test['name']);
+                                                            break;
+                                                    }
+
+
+                                                    if ($serviceOutput) {
+                                                        echo "<tr><td>{$serviceOutput}</td><td>Rp " . number_format($price, 0, ',', '.') . "</td></tr>";
+                                                        $totalPrice += $price;
+                                                    }
+                                                }
+                                            endwhile;
+                                            ?>
+                                        </tbody>
+                                    </table>
+
+                                    <p class="total-price"><strong>Total Price:</strong> Rp <?= number_format($totalPrice, 0, ',', '.') ?></p>
+                                <?php else: ?>
+                                    <p>No transactions found for this patient.</p>
+                                <?php endif; ?>
+
+                                <p class="note">Thank you for choosing Pelita Harapan Hospital. If you have any questions about this invoice, please contact us.</p>
                             </div>
                         </div>
                     </div>

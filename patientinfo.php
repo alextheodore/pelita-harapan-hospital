@@ -1,7 +1,32 @@
 <?php
-if (!isset($_SESSION)) {
-    session_start();
+// Include database connection
+include 'conf/connection.php';
+$conn = getConnection();
+
+// Get patient_id from URL
+$patient_id = $_GET['patient_id'] ?? 'PA001';
+
+if (!$patient_id) {
+    echo "No patient ID specified.";
+    exit;
 }
+
+// Fetch patient details
+$patientQuery = $conn->prepare("SELECT * FROM MsPatient WHERE patient_id = ?");
+$patientQuery->bind_param("s", $patient_id);
+$patientQuery->execute();
+$patientResult = $patientQuery->get_result();
+$patient = $patientResult->fetch_assoc();
+
+// Fetch transaction headers for the patient
+$transactionHeaderQuery = $conn->prepare("
+    SELECT * FROM TransactionHeader 
+    WHERE patient_id = ?
+");
+$transactionHeaderQuery->bind_param("s", $patient_id);
+$transactionHeaderQuery->execute();
+$transactionHeaders = $transactionHeaderQuery->get_result();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -178,7 +203,7 @@ if (!isset($_SESSION)) {
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
                 <h1>Home</h1>
-                <h2>Patient Status > Cecilia Zevanya > Patient Info</h2>
+                <h1 class="fw-medium">Registration > Patient Info > <span class="fw-bold">Medical Check Up</span></h1>
 
                 <br>
                 <br>
@@ -189,18 +214,11 @@ if (!isset($_SESSION)) {
                                 <div class="patient-info">
                                     <div class="avatar"></div>
                                     <div class="details">
-                                        <h3>NAMA</h3>
-                                        <p>No. Antrian: <strong>A-01</strong></p>
-                                        <div class="gender-badge">Female</div>
+                                        <h3><?= htmlspecialchars($patient['name']) ?></h3>
+                                        <p>No. Antrian: A-01</p>
+                                        <div class="gender-badge"><?= htmlspecialchars($patient['gender']) ?></div>
                                     </div>
                                 </div>
-
-                                <!-- Patient Status Section -->
-                                <div class="patient-status">
-                                    <h6><strong>Patient Status:</strong> Queue / In / Out</h6>
-                                </div>
-
-                                <!-- Menu Section -->
                                 <div class="menu">
                                     <a class="menu-item" href="patientinfo.php" style="text-decoration: none; background-color:#a73b62">
                                         Patient Info <span class="arrow">></span>
@@ -212,17 +230,127 @@ if (!isset($_SESSION)) {
                             </div>
                             <div class="details-card">
                                 <div class="section-title">PATIENT INFO</div>
-                                <p>NIK: 0101010101212200</p>
-                                <p>DOB: 29 Januari 2003</p>
-                                <p>No.Tlp: 087XXXXXXX</p>
-                                <p>No.BPJS: 0234556987656567</p>
-                                <p>Alamat: Perumahan permata Blok A3/45</p>
+                                <p>NIK: <?= htmlspecialchars($patient['nik']) ?></p>
+                                <p>DOB: <?= htmlspecialchars($patient['dob']) ?></p>
+                                <p>No.Tlp: <?= htmlspecialchars($patient['phone']) ?></p>
+                                <p>No.BPJS: <?= htmlspecialchars($patient['bpjs_card']) ?></p>
+                                <p>Alamat: <?= htmlspecialchars($patient['address']) ?></p>
                                 <div class="section-title">Layanan Yang Digunakan:</div>
-                                <p>Konsultasi Spesialist Ortopedi</p>
-                                <p>Dokter: Dr.dr.AAAAAA, Sp.OT (K)</p>
-                                <p>Jam: 13:00 WIB</p>
-                                <div class="section-title">Imaging Test</div>
-                                <p>X-ray</p>
+                                <div class="accordion-body">
+                                    <?php if ($transactionHeaders->num_rows > 0): ?>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Service Details</th>
+                                                    <th>Price (Rp)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $totalPrice = 0;
+
+                                                while ($transaction = $transactionHeaders->fetch_assoc()): ?>
+                                                <?php
+                                                    $transactionDetailsQuery = $conn->prepare("SELECT details_id FROM TransactionDetail WHERE transaction_id = ?");
+                                                    $transactionDetailsQuery->bind_param("s", $transaction['transaction_id']);
+                                                    $transactionDetailsQuery->execute();
+                                                    $transactionDetails = $transactionDetailsQuery->get_result();
+
+                                                    while ($detail = $transactionDetails->fetch_assoc()) {
+                                                        $details_id = $detail['details_id'];
+                                                        $serviceOutput = "";
+                                                        $price = 0; // Initialize price for this service
+
+                                                        switch (substr($details_id, 0, 1)) {
+                                                            case '6':
+                                                            case '7':
+                                                            case '8':
+                                                                $roomDetailsQuery = $conn->prepare("SELECT code, room_id FROM MsRoomDetails WHERE patient_id = ? AND code = ?");
+                                                                $roomDetailsQuery->bind_param("ss", $patient_id, $details_id);
+                                                                $roomDetailsQuery->execute();
+                                                                $roomDetails = $roomDetailsQuery->get_result()->fetch_assoc();
+
+                                                                if ($roomDetails) {
+                                                                    $code = $roomDetails['code'];
+                                                                    $room_id = $roomDetails['room_id'];
+
+                                                                    $roomHeaderQuery = $conn->prepare("SELECT price FROM MsRoomHeader WHERE room_id = ?");
+                                                                    $roomHeaderQuery->bind_param("s", $room_id);
+                                                                    $roomHeaderQuery->execute();
+                                                                    $roomHeader = $roomHeaderQuery->get_result()->fetch_assoc();
+
+                                                                    if ($roomHeader) {
+                                                                        $price = $roomHeader['price'];
+                                                                        $serviceOutput = "Room Code: " . htmlspecialchars($code);
+                                                                    }
+                                                                }
+                                                                break;
+
+                                                            default:
+                                                                break;
+                                                        }
+
+                                                        $prefix = substr($details_id, 0, 2);
+
+                                                        switch ($prefix) {
+                                                            case 'AP':
+                                                                $appointmentQuery = $conn->prepare("SELECT date, price FROM MsAppointment WHERE appointment_id = ?");
+                                                                $appointmentQuery->bind_param("s", $details_id);
+                                                                $appointmentQuery->execute();
+                                                                $appointment = $appointmentQuery->get_result()->fetch_assoc();
+                                                                $price = $appointment['price'];
+                                                                $serviceOutput = "Appointment on " . htmlspecialchars($appointment['date']);
+                                                                break;
+
+                                                            case 'MC':
+                                                                $checkupQuery = $conn->prepare("SELECT date, details, price FROM MsCheckup WHERE checkup_id = ?");
+                                                                $checkupQuery->bind_param("s", $details_id);
+                                                                $checkupQuery->execute();
+                                                                $checkup = $checkupQuery->get_result()->fetch_assoc();
+                                                                $price = $checkup['price'];
+                                                                $serviceOutput = "Checkup on " . htmlspecialchars($checkup['date']) . " - Details: " . htmlspecialchars($checkup['details']);
+                                                                break;
+
+                                                            case 'EM':
+                                                                $emergencyQuery = $conn->prepare("SELECT actions FROM MsEmergency WHERE emergency_id = ?");
+                                                                $emergencyQuery->bind_param("s", $details_id);
+                                                                $emergencyQuery->execute();
+                                                                $emergency = $emergencyQuery->get_result()->fetch_assoc();
+                                                                $serviceOutput = "Emergency Action: " . htmlspecialchars($emergency['actions']);
+                                                                break;
+
+                                                            case 'TE':
+                                                                $testQuery = $conn->prepare("SELECT name, price FROM MsTest WHERE test_id = ?");
+                                                                $testQuery->bind_param("s", $details_id);
+                                                                $testQuery->execute();
+                                                                $test = $testQuery->get_result()->fetch_assoc();
+                                                                $price = $test['price'];
+                                                                $serviceOutput = "Test Name: " . htmlspecialchars($test['name']);
+                                                                break;
+                                                        }
+
+                                                        if ($serviceOutput) {
+                                                            echo "<tr><td>{$serviceOutput}</td><td>Rp " . number_format($price, 0, ',', '.') . "</td></tr>";
+                                                            $totalPrice += $price;
+                                                        }
+                                                    }
+                                                endwhile;
+                                                ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td><strong>Total</strong></td>
+                                                    <td><strong>Rp <?= number_format($totalPrice, 0, ',', '.') ?></strong></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    <?php else: ?>
+                                        <p>No transactions found for this patient.</p>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="section-title">Total Price:</div>
+                                <p><?= htmlspecialchars($totalPrice) ?></p>
                             </div>
                         </div>
                     </div>
