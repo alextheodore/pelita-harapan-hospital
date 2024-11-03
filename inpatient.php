@@ -1,6 +1,32 @@
+<?php
+include 'conf/connection.php';
+$conn = getConnection();
+
+$sql = "
+    SELECT h.room_id, h.name, h.total, h.price, h.date, h.last_update, 
+           SUM(CASE WHEN d.status = 'Available' THEN 1 ELSE 0 END) AS available_count,
+           SUM(CASE WHEN d.status = 'Occupied' THEN 1 ELSE 0 END) AS occupied_count,
+           COUNT(d.room_id) AS total_count
+    FROM MsRoomHeader h
+    LEFT JOIN MsRoomDetails d ON h.room_id = d.room_id
+    GROUP BY h.room_id
+";
+
+$result = $conn->query($sql);
+$availableRooms = [];
+
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $availableRooms[] = $row;
+    }
+}
+
+$_SESSION['availableRooms'] = $availableRooms;
+
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
     <meta charset="UTF-8" />
@@ -21,55 +47,26 @@
             <!-- Main Content -->
             <div class="col-md-10 content">
                 <!-- Header and Search Bar -->
-
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Registration - Inpatient Room </h1>
+                <h1 class="fw-medium">Registration > <span class="fw-bold">Inpatient Room</span></h1>
 
                 <div class="room-section">
-                    <div class="room vip">
-                        <div class="room-header">
-                            <span class="room-title">VIP</span>
-                            <span class="room-update">Update 10-09-2024 21:34:39</span>
+                    <?php foreach ($availableRooms as $room): ?>
+                        <div class="room">
+                            <div class="room-header">
+                                <span class="room-title"><?php echo htmlspecialchars($room['name']); ?></span>
+                                <span class="room-update" style="font-size: 16px;">Last Updated at: <?php echo htmlspecialchars($room['last_update']); ?></span>
+                            </div>
+                            <div class="room-stats">
+                                <div class="total-rooms">Total <span><?php echo htmlspecialchars($room['total_count']); ?></span></div>
+                                <div class="available-rooms">Available <span><?php echo htmlspecialchars($room['available_count']); ?></span></div>
+                                <div class="queue">Occupied <span><?php echo htmlspecialchars($room['occupied_count']); ?></span></div>
+                            </div>
+                            <a href="room_details.php?room_id=<?php echo htmlspecialchars($room['room_id']); ?>" class="room-detail-button">Room Detail</a>
                         </div>
-                        <div class="room-stats">
-                            <div class="total-rooms">Total <span>5</span></div>
-                            <div class="available-rooms">Available <span>3</span></div>
-                            <div class="queue">Queue <span>0</span></div>
-                        </div>
-                        <a href="viproom.php" class="room-detail-button">Room Detail</a>
-                    </div>
-
-                    <div class="room first-class">
-                        <div class="room-header">
-                            <span class="room-title">1st Class</span>
-                            <span class="room-update">Update 10-09-2024 21:34:39</span>
-                        </div>
-                        <div class="room-stats">
-                            <div class="total-rooms">Total <span>10</span></div>
-                            <div class="available-rooms">Available <span>8</span></div>
-                            <div class="queue">Queue <span>1</span></div>
-                        </div>
-                        <a href="" class="room-detail-button">Room Detail</a>
-                    </div>
-
-                    <div class="room second-class">
-                        <div class="room-header">
-                            <span class="room-title">2nd Class</span>
-                            <span class="room-update">Update 10-09-2024 21:34:39</span>
-                        </div>
-                        <div class="room-stats">
-                            <div class="total-rooms">Total <span>15</span></div>
-                            <div class="available-rooms">Available <span>3</span></div>
-                            <div class="queue">Queue <span>2</span></div>
-                        </div>
-                        <a href="" class="room-detail-button">Room Detail</a>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-
-
-
-
             </div>
         </div>
     </div>

@@ -17,7 +17,7 @@ function generateAppointmentId($conn) {
     $result = $conn->query($query);
 
     // Default ID if no records exist
-    $latestID = 'AP001';
+    $latestID = 'AP000';
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();

@@ -1,0 +1,23 @@
+
+    .accordion-button {
+        background-color: pink;
+        color: black;
+        border: none;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: pink;
+        color: black;
+    }
+
+    .accordion-button:not(.collapsed)::after {
+        background-image: none;
+    }
+
+    .accordion-button:focus {
+        box-shadow: none;
+    }
+
+    .accordion-body {
+        background-color: #ffe6e6;
+    }

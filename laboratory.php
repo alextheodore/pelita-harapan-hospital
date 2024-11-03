@@ -1,3 +1,48 @@
+<?php
+$allServices = [
+    [
+        'id' => 1,
+        'name' => 'Arterial Blood Gas',
+        'description' => [
+            'Measures oxygen and carbon dioxide levels in blood',
+            'Assesses lung function and blood acidity (pH)',
+            'Commonly used for patients with respiratory issues',
+        ],
+        'price' => 400000,
+    ],
+    [
+        'id' => 2,
+        'name' => 'Blood Glucose Test',
+        'description' => [
+            'Measures blood sugar levels to detect diabetes',
+            'Helps monitor glucose control in diabetic patients',
+            'Simple and quick blood test',
+        ],
+        'price' => 150000,
+    ],
+    [
+        'id' => 3,
+        'name' => 'Coagulation Test',
+        'description' => [
+            'Assesses blood clotting ability',
+            'Important for detecting bleeding disorders',
+            'Helps monitor anticoagulant therapy',
+        ],
+        'price' => 300000,
+    ],
+    [
+        'id' => 4,
+        'name' => 'Complete Blood Count',
+        'description' => [
+            'Measures levels of red cells, white cells, and platelets',
+            'Helps detect infections, anemia, and other conditions',
+            'Basic and widely used blood test',
+        ],
+        'price' => 200000,
+    ],
+];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,8 +54,24 @@
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet" />
-    <link rel="stylesheet" href="css/laboratory.css" />
+    <link rel="stylesheet" href="css/radiology.css" />
 </head>
+<style>
+    .service-item {
+        background-color: #e895b7;
+        transition: .3s ease;
+        cursor: pointer;
+        color: white;
+    }
+
+    .service-item:hover {
+        background-color: whitesmoke;
+        transition: .3s ease;
+        transform: scale(1.07);
+        color: #e895b7;
+        ;
+    }
+</style>
 
 <body>
     <div class="container-fluid">
@@ -24,22 +85,31 @@
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Registration - Laboratory Test</h1>
-
-                <div class="specialist-container">
-                    <div class="specialist-column">
-                        <a href="" class="specialist-button">Arterial Blood Gas</a>
-                        <a href="" class="specialist-button">Blood Glucose Test</a>
-
-                    </div>
-                    <div class="specialist-column">
-                        <a href="" class="specialist-button">Coagulation Test</a>
-                        <a href="cbc.php" class="specialist-button">Complete Blood Count</a>
-
-
+                <h1 class="fw-medium">Registration > <span class="fw-bold">Laboratory Test</span></h1>
+                <div style="background-color: white;" class="d-flex justify-content-center flex-column align-items-center p-4">
+                    <h2 class="text-center m-3 p-3">Choose your Laboratory Test!</h2>
+                    <div class="row" id="serviceList">
+                        <?php foreach ($allServices as $service): ?>
+                            <div class="col-md-4 mb-4">
+                                <?php
+                                $serviceDetails = json_encode([
+                                    'id' => $service['id'],
+                                    'name' => $service['name'],
+                                    'price' => $service['price'],
+                                    'description' => $service['description'],
+                                    'type' => "Laboratory",
+                                ]);
+                                $encodedServiceDetails = urlencode($serviceDetails);
+                                ?>
+                                <a href="laboratory_details.php?service=<?php echo $encodedServiceDetails; ?>" style="text-decoration: none; color: inherit;">
+                                    <div class="service-item d-flex justify-content-center align-items-center p-3 rounded m-4" style="height: 150px; min-width: 200px;">
+                                        <h3 class="text-center"><?php echo $service['name']; ?></h3>
+                                    </div>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

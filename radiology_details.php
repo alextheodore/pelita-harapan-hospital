@@ -2,6 +2,7 @@
 if (isset($_GET['service'])) {
     // Decode the JSON object from the URL
     $serviceDetails = json_decode(urldecode($_GET['service']), true);
+    $_SESSION['test_radiology'] = $serviceDetails;
 } else {
     $serviceDetails = null; // Set to null if no service details are provided
 }
@@ -45,7 +46,7 @@ if (isset($_GET['service'])) {
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1 class="fw-medium">Registration > Medical Checkup > <span class="fw-bold"><?php echo $serviceDetails['name'] ?></span></h1>
+                <h1 class="fw-medium">Registration > Radiology Test > <span class="fw-bold"><?php echo $serviceDetails['name'] ?></span></h1>
                 <div class="package-container">
                     <img src="images/mcuu.png" alt="Stroke Screening Package">
 
@@ -77,7 +78,7 @@ if (isset($_GET['service'])) {
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="conf/create_mcu.php" method="POST">
+                            <form action="conf/create_test.php" method="POST">
                                 <div class="dates d-flex flex-column align-items-center">
                                     <label for="mcu_date">Select Date: </label>
                                     <input type="date" id="mcu_date" name="mcu_date" required>
@@ -105,6 +106,7 @@ if (isset($_GET['service'])) {
                                 </div>
                                 <br>
                                 <input type="hidden" name="test_name" value="<?php echo $serviceDetails['name'] ?>">
+                                <input type="hidden" name="type" value="<?php echo $serviceDetails['type'] ?>">
                                 <input type="hidden" name="price" value="<?php echo $serviceDetails['price'] ?>">
                                 <button type="submit" class="btn book-now-btn">Book Now!</button>
                             </form>

@@ -122,11 +122,11 @@ $allServices = [
                                 $serviceDetails = json_encode([
                                     'id' => $service['id'],
                                     'name' => $service['name'],
-                                    'image' => $service['image'],
+                                    'image' => $service['image'], // Replace backslashes with forward slashes
                                     'description' => $service['description'],
                                     'price' => $service['price'],
                                 ]);
-                                $encodedServiceDetails = urlencode($serviceDetails); 
+                                $encodedServiceDetails = urlencode($serviceDetails); // Ensure the JSON is URL-encoded
                                 $_SESSION['test'] = $serviceDetails;
                                 ?>
                                 <a href="mcu_details.php?service=<?php echo $encodedServiceDetails; ?>" style="text-decoration: none; color: inherit;">

@@ -17,6 +17,15 @@ $formattedDate = $dateTime->format('F j, Y');
         rel="stylesheet" />
     <link rel="stylesheet" href="css/appoinment.css" />
 </head>
+<style>
+    .flex-item {
+        text-align: center;
+        flex: 1;
+        /* This will make all flex items grow equally */
+        max-width: 300px;
+        /* Set a maximum width for each item */
+    }
+</style>
 
 <body>
     <div class="container-fluid">
@@ -30,17 +39,7 @@ $formattedDate = $dateTime->format('F j, Y');
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1 class="fw-medium">Registration > Book Appointment > <?php 
-                 if($_SESSION['specialist'] == "Specialist"){
-                    echo "<span class=fw-bold>Specialist</span>";
-                 }
-                 else{
-                    echo "<span class=fw-bold>General Practitioner</span>";
-                 }
-                 ?>
-                 <span class="fw-bold">
-                 
-                </span></h1>
+                <h1 class="fw-medium">Registration > <?php echo $details['type'] === "Radiology" ? "Radiology" : "Laboratory" ?> > <span class="fw-bold"><?php echo $details['name'] ?></span></h1>
                 <div class="welcome-section text-center p-0 my-4 d-flex flex-row justify-content-start align-items-top">
                     <img src="images/image/ornament.png" class="img-fluid" width="200" alt="Logo" style="margin-left: -30px; margin-top: -15px;" />
                     <div class="hero-text flex-fill">
@@ -61,16 +60,24 @@ $formattedDate = $dateTime->format('F j, Y');
                 <div class="confirmation-container d-flex justify-content-center align-items-center text-center">
                     <img src="images/checkmark.jpg" alt="Confirmed">
                     <h2>Book Confirmed</h2>
-                    <div class="d-flex justify-content-center flex-row align-items-center text-center p-3 gap-5" style="text-align: center;">
-                        <div>
-
-                            <h2 style="text-align: center;"> <?php echo $formattedTime; ?></h2>
-                            <h3 style="text-align: center;"> <?php echo $formattedDate ?></h3>
+                    <div class="d-flex justify-content-center flex-row align-items-center text-center p-3 gap-5">
+                        <div class="flex-item" style="max-width: 300px; width: 100%; text-align: center;">
+                            <h2><?php echo $details['name']; ?></h2>
                         </div>
-                        <div style="width: 2px; height: 100px; background-color: black; margin: 0 auto;"></div>
-                        <div>
-                            <h2 style="text-align: center;"> <?php echo $details['name']; ?></h2>
-                            <h3 style="text-align: center;"> <?php echo $_SESSION['selectedSpecialist'] ?></h3>
+                        <div style="width: 2px; height: 100px; background-color: black;"></div>
+                        <div class="flex-item" style="max-width: 300px; width: 100%;">
+                            <?php
+                            $details = json_decode(urldecode($_GET['details']), true);
+                            $dateTime = new DateTime($details['date']);
+                            $formattedTime = $dateTime->format('H:i') . ' WIB';
+                            $formattedDate = $dateTime->format('F j, Y');
+                            ?>
+                            <h2 style="text-align: center;"><?php echo $formattedTime; ?></h2>
+                            <h3 style="text-align: center;"><?php echo $formattedDate; ?></h3>
+                        </div>
+                        <div style="width: 2px; height: 100px; background-color: black;"></div>
+                        <div class="flex-item" style="max-width: 300px; width: 100%;">
+                            <h3>Status: <br>Confirmed</h3>
                         </div>
                     </div>
                     <a href="registration.php" class="back-btn">Back</a>

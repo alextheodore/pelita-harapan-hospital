@@ -36,7 +36,10 @@
               </div>
               <div class="form-group">
                 <input type="date">
-                <input type="text" placeholder="Gender">
+                <select name="gender">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
               </div>
               <div class="form-group">
                 <input type="text" placeholder="Phone number">

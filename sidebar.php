@@ -34,10 +34,20 @@
                     <p>Patient Status</p>
                 </div>
             </a>
-            <a class="nav-link" href="conf/logout.php">
+            <a class="nav-link" href="reporting.php">
+                <div
+                    class="d-flex flex-column flex-wrap justify-content-center align-items-center gap-4 w-100">
+                    <img
+                        src="images/report.png"
+                        style="width: 65px;"
+                        alt="Patient Status" />
+                    <p>Reporting</p>
+                </div>
+            </a>
+            <a class="nav-link" href="<?php echo isset($_SESSION['user_id']) ? 'conf/logout.php' : 'login.php'; ?>">
                 <div class="d-flex flex-column flex-wrap justify-content-center align-items-center gap-4 w-100" style="background-color: #aaaaaa; border-radius: 30px;">
-                    <img src="images/image/login.png" style="width: 65px;" alt="Logout" />
-                    <p class="text-white">Logout</p>
+                    <img src="images/image/<?php echo isset($_SESSION['user_id']) ? 'login.png' : 'login-icon.png'; ?>" style="width: 65px;" alt="<?php echo isset($_SESSION['user']) ? 'Logout' : 'Login'; ?>" />
+                    <p class="text-white"><?php echo isset($_SESSION['user_id']) ? 'Logout' : 'Login'; ?></p>
                 </div>
             </a>
         </nav>
