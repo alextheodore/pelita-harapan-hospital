@@ -67,7 +67,7 @@
         align-items: center;
         margin-bottom: 20px;
     }
-    
+
     .date-picker form {
         display: flex;
         align-items: center;
@@ -76,8 +76,8 @@
     .date-picker label {
         margin-right: 10px;
     }
-    
-    
+
+
 
     .patient-status p {
         margin: 0;
@@ -153,6 +153,11 @@
         font-size: 0.9em;
         margin-bottom: 10px;
     }
+
+    .bg-pink-dark {
+        background-color: #ff6699;
+        /* Darker shade of pink */
+    }
 </style>
 
 <body>
@@ -167,8 +172,8 @@
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                 <!-- Title and Date Picker Section -->
-                 <div class="header-section">
+                <!-- Title and Date Picker Section -->
+                <div class="header-section">
                     <h2 class="patient-status">Patient Status</h2>
                     <div class="date-picker">
                         <form method="GET" action="conf/get_appointment.php">
@@ -182,34 +187,67 @@
                 <!-- Appointments Section -->
                 <div class="appointments-section mt-4">
                     <?php if (isset($_SESSION['appointments']) && count($_SESSION['appointments']) > 0): ?>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Appointment ID</th>
-                                    <th>Doctor ID</th>
-                                    <th>Patient_ID</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($_SESSION['appointments'] as $appointment): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($appointment['appointment_id']); ?></td>
-                                        <td><?php echo htmlspecialchars($appointment['doctor_id']); ?></td>
-                                        <td><?php echo htmlspecialchars($appointment['patient_id']); ?></td>
-                                        <td><?php echo htmlspecialchars($appointment['date']); ?></td>
-                                        <td><?php echo htmlspecialchars($appointment['status']); ?></td>
-                                        <td><?php echo htmlspecialchars($appointment['price']); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                        <div class="d-flex flex-column align-items-center justify-content-between w-100">
+                            <?php
+                            // Separate appointments into paid and unpaid
+                            $unpaidAppointments = [];
+                            $paidAppointments = [];
+                            foreach ($_SESSION['appointments'] as $index => $appointment) {
+                                if ($appointment['status'] === 'Paid') {
+                                    $paidAppointments[] = $appointment;
+                                } else {
+                                    $unpaidAppointments[] = $appointment;
+                                }
+                            }
+
+                            // Display unpaid appointments first
+                            foreach ($unpaidAppointments as $index => $appointment): ?>
+                                <a href="patientinfo.php?patient_id=<?php echo urlencode($appointment['patient_id']); ?>&queue_number=<?php echo urlencode(sprintf('A-%03d', $index + 1)); ?>" class="d-flex justify-content-between bg-white w-100 align-items-center mt-3 mb-3 rounded p-3 text-decoration-none" style="color: inherit;">
+                                    <div class="d-flex flex-column justify-content-start align-items-start" style="flex: 1;">
+                                        <h4 style="margin-bottom: 0px;"><?php echo htmlspecialchars($appointment['patient_id'] . ' - ' . $appointment['patient_name']); ?></h4>
+                                        <h6 style="margin-bottom: 0px;">Handled by: <?php echo htmlspecialchars($appointment['doctor_id'] . ' - ' . $appointment['doctor_name']); ?></h6>
+                                    </div>
+
+                                    <div class="d-flex flex-column align-items-center justify-content-center" style="flex: 1;">
+                                        <h5>Queue Number</h5>
+                                        <?php
+                                        // Generate Queue Number for unpaid appointments
+                                        $queueNumber = sprintf('A-%03d', $index + 1);
+                                        ?>
+                                        <h6><?php echo htmlspecialchars($queueNumber); ?></h6>
+                                    </div>
+
+                                    <div class="d-flex status-indicator" style="flex: 1; margin-left: 10px; justify-content: end">
+                                        <span class="badge bg-success p-2"><?php echo htmlspecialchars($appointment['status']); ?></span> <!-- Display status -->
+                                    </div>
+                                </a>
+                            <?php endforeach; ?>
+
+                            <!-- Display paid appointments last with a darker shade of pink -->
+                            <?php foreach ($paidAppointments as $index => $appointment): ?>
+                                <a href="patientinfo.php?patient_id=<?php echo urlencode($appointment['patient_id']); ?>&queue_number=<?php echo urlencode('—'); ?>" class="d-flex justify-content-between bg-pink-dark text-white w-100 align-items-center mt-3 mb-3 rounded p-3 text-decoration-none" style="color: inherit;">
+                                    <div class="d-flex flex-column justify-content-start align-items-start" style="flex: 1;">
+                                        <h4 style="margin-bottom: 0px;"><?php echo htmlspecialchars($appointment['patient_id'] . ' - ' . $appointment['patient_name']); ?></h4>
+                                        <h6 style="margin-bottom: 0px;">Handled by: <?php echo htmlspecialchars($appointment['doctor_id'] . ' - ' . $appointment['doctor_name']); ?></h6>
+                                    </div>
+
+                                    <div class="d-flex flex-column align-items-center justify-content-center" style="flex: 1;">
+                                        <h5>Queue Number</h5>
+                                        <h6><?php echo htmlspecialchars('—'); // Show a dash for paid appointments 
+                                            ?></h6>
+                                    </div>
+
+                                    <div class="d-flex status-indicator" style="flex: 1; margin-left: 10px; justify-content: end;">
+                                        <span class="badge bg-success p-2"><?php echo htmlspecialchars($appointment['status']); ?></span> <!-- Display status -->
+                                    </div>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
                     <?php else: ?>
                         <p class="text-center">No appointments found for the selected date.</p>
                     <?php endif; ?>
                 </div>
+
 
                 <!-- <div class="d-flex flex-column align-items-center justify-content-between ma w-100">
                     <a href="patientinfo.php" class="d-flex justify-content-between bg-white w-100 align-items-center mt-3 mb-3 rounded p-3 text-decoration-none" style="color: inherit;">

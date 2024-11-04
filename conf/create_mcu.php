@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'connection.php';
+include 'create_transaction.php'; // Include transaction insertion file
+
 $serviceDetails = json_decode(urldecode($_SESSION['test']), true);
 
 $date = $_POST['mcu_date'];
@@ -14,16 +16,12 @@ $datetime = date('Y-m-d H:i:s', strtotime("$date $time"));
 // Database connection
 $conn = getConnection();
 
-
-function generateCheckupId($conn)
-{
-    // This query to get the latest ID from the table in the database
+// Function to generate unique checkup ID
+function generateCheckupId($conn) {
     $query = "SELECT checkup_id FROM `mscheckup` ORDER BY checkup_id DESC LIMIT 1";
     $result = $conn->query($query);
 
-    // Default ID if no records exist
-    $latestID = 'MC001';
-
+    $latestID = 'MC000';
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $latestID = $row['checkup_id'];
@@ -34,26 +32,42 @@ function generateCheckupId($conn)
 }
 
 $newId = generateCheckupId($conn);
-
-$stmt = $conn->prepare("INSERT INTO mscheckup (checkup_id, patient_id, date, status, details, price) VALUES (?, ?, ?, ?, ?, ?)");
-
 $status = "Confirmed";
+$patient_id = $_SESSION['patient_id'];
+$admin_id = $_SESSION['user_id'];
 
-$stmt->bind_param("sssssi", $newId, $_SESSION['patient_id'], $datetime,  $status, $name ,$price);
+// Begin transaction
+$conn->begin_transaction();
 
-// Execute the statement
-if ($stmt->execute()) {
+try {
+    // Insert into `mscheckup`
+    $stmt = $conn->prepare("INSERT INTO mscheckup (checkup_id, patient_id, date, status, details, price) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssi", $newId, $patient_id, $datetime, $status, $name, $price);
+
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to insert checkup: " . $stmt->error);
+    }
+    $stmt->close();
+
+    // Insert transaction using checkup ID as room_code
+    $transaction_id = insertTransaction($conn, $patient_id, $admin_id, $datetime, $newId);
+
+    // Commit transaction
+    $conn->commit();
+
+    // Encode details and redirect
     $details = json_encode([
         'name' => $name,
         'date' => $datetime,
     ]);
     $encodedDetails = urlencode($details);
-    header("Location: ../mcu_confirm.php?details=" . urlencode($encodedDetails));
+    header("Location: ../mcu_confirm.php?details=" . $encodedDetails);
     exit();
-} else {
-    echo "Error: " . $stmt->error;
+
+} catch (Exception $e) {
+    $conn->rollback();
+    echo "Error: " . $e->getMessage();
 }
 
-// Close the connection
-$stmt->close();
+// Close connection
 $conn->close();

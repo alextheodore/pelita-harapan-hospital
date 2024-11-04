@@ -202,8 +202,7 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Home</h1>
-                <h1 class="fw-medium">Registration > Patient Info > <span class="fw-bold">Medical Check Up</span></h1>
+                <h1 class="fw-medium">Registration > Patient Status > Patient Info > <span class="fw-bold"><?php echo $patient['name'] ?></span></h1>
 
                 <br>
                 <br>
@@ -214,16 +213,20 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                                 <div class="patient-info">
                                     <div class="avatar"></div>
                                     <div class="details">
-                                        <h3><?= htmlspecialchars($patient['name']) ?></h3>
-                                        <p>No. Antrian: A-01</p>
+                                        <h3 style="font-weight: bolder;"><?= htmlspecialchars($patient['name']) ?></h3>
+                                        <?php
+                                        $queueNumber = isset($_GET['queue_number']) ? htmlspecialchars($_GET['queue_number']) : 'N/A';
+                                        ?>
+                                        <p>Queue No : <?= $queueNumber ?></p>
                                         <div class="gender-badge"><?= htmlspecialchars($patient['gender']) ?></div>
                                     </div>
                                 </div>
+                                <br>
                                 <div class="menu">
-                                    <a class="menu-item" href="patientinfo.php" style="text-decoration: none; background-color:#a73b62">
+                                    <a class="menu-item p-4" href="patientinfo.php?patient_id=<?php echo urlencode($patient['patient_id']); ?>&queue_number=<?php echo $_GET['queue_number'] ?>" style="text-decoration: none; background-color:#a73b62">
                                         Patient Info <span class="arrow">></span>
                                     </a>
-                                    <a class="menu-item" href="transaction.php" style="text-decoration: none;">
+                                    <a class="menu-item p-4" href="transaction.php?patient_id=<?php echo urlencode($patient['patient_id']); ?>&queue_number=<?php echo $_GET['queue_number'] ?>" style="text-decoration: none; background-color: #ffb6c1">
                                         Patient Transaction <span class="arrow">></span>
                                     </a>
                                 </div>
@@ -311,14 +314,6 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                                                                 $serviceOutput = "Checkup on " . htmlspecialchars($checkup['date']) . " - Details: " . htmlspecialchars($checkup['details']);
                                                                 break;
 
-                                                            case 'EM':
-                                                                $emergencyQuery = $conn->prepare("SELECT actions FROM MsEmergency WHERE emergency_id = ?");
-                                                                $emergencyQuery->bind_param("s", $details_id);
-                                                                $emergencyQuery->execute();
-                                                                $emergency = $emergencyQuery->get_result()->fetch_assoc();
-                                                                $serviceOutput = "Emergency Action: " . htmlspecialchars($emergency['actions']);
-                                                                break;
-
                                                             case 'TE':
                                                                 $testQuery = $conn->prepare("SELECT name, price FROM MsTest WHERE test_id = ?");
                                                                 $testQuery->bind_param("s", $details_id);
@@ -350,7 +345,7 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                                 </div>
 
                                 <div class="section-title">Total Price:</div>
-                                <p><?= htmlspecialchars($totalPrice) ?></p>
+                                <td><strong>Rp <?= number_format($totalPrice, 0, ',', '.') ?></strong></td>
                             </div>
                         </div>
                     </div>

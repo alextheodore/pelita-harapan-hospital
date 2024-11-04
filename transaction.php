@@ -42,8 +42,9 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/transaction.css" />
 </head>
+
 <body>
-    
+
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
@@ -55,8 +56,7 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Home</h1>
-                <h1 class="fw-medium">Registration > Patient Info > <span class="fw-bold">Medical Check Up</span></h1>
+                <h1 class="fw-medium">Registration > Patient Status > Transaction > <span class="fw-bold"><?php echo $patient['name'] ?></span></h1>
 
                 <br>
                 <br>
@@ -68,26 +68,42 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                                     <div class="avatar"></div>
                                     <div class="details">
                                         <h3><?= htmlspecialchars($patient['name']) ?></h3>
-                                        <p>No. Antrian: A-01</p>
+                                        <?php
+                                        $queueNumber = isset($_GET['queue_number']) ? htmlspecialchars($_GET['queue_number']) : 'N/A';
+                                        ?>
+                                        <p>Queue No : <?= $queueNumber ?></p>
                                         <div class="gender-badge"><?= htmlspecialchars($patient['gender']) ?></div>
                                     </div>
                                 </div>
+                                <br>
                                 <div class="menu">
-                                    <a class="menu-item" href="patientinfo.php" style="text-decoration: none;">
+                                    <a class="menu-item p-4" href="patientinfo.php?patient_id=<?php echo urlencode($patient['patient_id']); ?>&queue_number=<?php echo $_GET['queue_number'] ?>" style="text-decoration: none; background-color:#a73b62">
                                         Patient Info <span class="arrow">></span>
                                     </a>
-                                    <a class="menu-item" href="transaction.php" style="text-decoration: none; background-color:#a73b62">
+                                    <a class="menu-item p-4" href="transaction.php?patient_id=<?php echo urlencode($patient['patient_id']); ?>&queue_number=<?php echo $_GET['queue_number'] ?>" style="text-decoration: none; background-color: #ffb6c1">
                                         Patient Transaction <span class="arrow">></span>
                                     </a>
                                 </div>
                             </div>
                             <div class="invoice-container">
                                 <div class="invoice-header">
-                                    <h1>Invoice</h1>
-                                    <p>Pelita Harapan Hospital</p>
-                                    <p>Jl. Example Street No.123, Jakarta, Indonesia</p>
+                                    <div class="header-text">
+                                        <div class="d-flex flex-row align-items-start justify-content-between">
+                                            <div>
+                                                <br>
+                                                <h1>Patient Invoice</h1>
+                                            </div>
+                                            <div>
+                                                <img src="/images/logoo.png" alt="Pelita Harapan Hospital Logo">
+                                            </div>
+                                        </div>
+                                        <p>Pelita Harapan Hospital</p>
+                                        <p>No.Tlp : (021) 543234555 | Fax : (021) 5432334455</p>
+                                        <p>Jl. Permata Buana No.34 Kabupaten Tangerang Selatan </p>
+                                        <br>
+                                    </div>
                                 </div>
-
+                                <div class="section-title" style="font-size: larger; text-align: center;">BILLING INVOICE</div>
                                 <div class="section-title">Patient Information</div>
                                 <div class="invoice-details">
                                     <p><strong>Name:</strong> <?= htmlspecialchars($patient['name']) ?></p>
@@ -171,14 +187,6 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                                                             $serviceOutput = "Checkup on " . htmlspecialchars($checkup['date']) . " - Details: " . htmlspecialchars($checkup['details']);
                                                             break;
 
-                                                        case 'EM':
-                                                            $emergencyQuery = $conn->prepare("SELECT actions FROM MsEmergency WHERE emergency_id = ?");
-                                                            $emergencyQuery->bind_param("s", $details_id);
-                                                            $emergencyQuery->execute();
-                                                            $emergency = $emergencyQuery->get_result()->fetch_assoc();
-                                                            $serviceOutput = "Emergency Action: " . htmlspecialchars($emergency['actions']);
-                                                            break;
-
                                                         case 'TE':
                                                             $testQuery = $conn->prepare("SELECT name, price FROM MsTest WHERE test_id = ?");
                                                             $testQuery->bind_param("s", $details_id);
@@ -205,7 +213,10 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                                     <p>No transactions found for this patient.</p>
                                 <?php endif; ?>
 
-                                <p class="note">Thank you for choosing Pelita Harapan Hospital. If you have any questions about this invoice, please contact us.</p>
+                                <div class="section-title">Handled by:</div>
+                                <p><strong>Admin:</strong> <?= htmlspecialchars($_SESSION['user_id'] . ' - ' . $_SESSION['fullname']) ?></p>
+                                <p class="note" style="font-weight: bold;">This invoice is valid even though it was generated electronically.</p>
+                                <a class="d-flex justify-content-center align-items-center" href="conf/done_payment.php?patient_id=<?php echo $patient['patient_id']; ?>" style="text-decoration: none; text-align: center; color: white; background-color: #a73b62; border-radius: 8px; padding: 8px;">Confirm Payment</a>
                             </div>
                         </div>
                     </div>

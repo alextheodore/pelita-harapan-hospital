@@ -1,11 +1,9 @@
 <?php
-if (!isset($_SESSION)) {
-    session_start();
-}
+$details = json_decode(urldecode($_GET['details']), true);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
     <meta charset="UTF-8" />
@@ -111,18 +109,14 @@ if (!isset($_SESSION)) {
 
                 <?php include 'topbar.php' ?>
                 <!-- Welcome Section -->
-                <h1>Home</h1>
 
-                <h2>Patient Status > Cecilia Zevanya > Patient Transaction</h2>
+                <h1 class="fw-medium">Registration > Patient Status > Transaction > <span class="fw-bold"><?php echo $details['name'] ?></span></h1>
 
                 <div class="top-section">
                     <div class="profile-info">
-                        <img src="https://via.placeholder.com/50" alt="User Icon">
                         <div class="info">
-                            <h2>Cecilia Zefanya</h2>
-                            <p>No. Antrian : 00001</p>
-                            <p>A-01</p>
-                            <span class="gender-badge">Female</span>
+                            <h1><?php echo $details['name'] ?></h1>
+                            <span class="gender-badge"><?php echo $details['gender'] ?></span>
                         </div>
                     </div>
                     <div class="status">

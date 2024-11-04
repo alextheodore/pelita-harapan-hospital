@@ -106,7 +106,7 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingPatientStatus">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePatientStatus" aria-expanded="false" aria-controls="collapsePatientStatus">
-                                Patient Status
+                                Patient History
                             </button>
                         </h2>
                         <div id="collapsePatientStatus" class="accordion-collapse collapse" aria-labelledby="headingPatientStatus" data-bs-parent="#accordionExample">
@@ -208,22 +208,13 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                                                                     echo "<p>Checkup on " . htmlspecialchars($checkup['date']) . " - Details: " . htmlspecialchars($checkup['details']) . "</p>";
                                                                     break;
 
-                                                                case 'EM': // Emergency
-                                                                    $emergencyQuery = $conn->prepare("SELECT actions FROM MsEmergency WHERE emergency_id = ?");
-                                                                    $emergencyQuery->bind_param("s", $details_id);
-                                                                    $emergencyQuery->execute();
-                                                                    $emergency = $emergencyQuery->get_result()->fetch_assoc();
-                                                                    $statusMessage = htmlspecialchars($appointment['status']);
-                                                                    echo "<p>Emergency Action: " . htmlspecialchars($emergency['actions']) . "</p>";
-                                                                    break;
-
                                                                 case 'TE': // Test
-                                                                    $testQuery = $conn->prepare("SELECT name, price FROM MsTest WHERE test_id = ?");
+                                                                    $testQuery = $conn->prepare("SELECT name, price, status FROM MsTest WHERE test_id = ?");
                                                                     $testQuery->bind_param("s", $details_id);
                                                                     $testQuery->execute();
                                                                     $test = $testQuery->get_result()->fetch_assoc();
                                                                     $totalPrice += $test['price']; // Accumulate test price
-                                                                    $statusMessage = htmlspecialchars($appointment['status']);
+                                                                    $statusMessage = htmlspecialchars($test['status']);
                                                                     echo "<p>Test Name: " . htmlspecialchars($test['name']) . "</p>";
                                                                     break;
                                                             }

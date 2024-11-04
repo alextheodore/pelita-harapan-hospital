@@ -24,7 +24,7 @@
                     <p>Registration</p>
                 </div>
             </a>
-            <a class="nav-link" href="patientstatus.php">
+            <a class="nav-link" href="conf/get_appointment.php">
                 <div
                     class="d-flex flex-column flex-wrap justify-content-center align-items-center gap-4 w-100">
                     <img

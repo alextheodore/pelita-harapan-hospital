@@ -1,212 +1,226 @@
+.actions {
+    display: flex;
+    align-items: center;
+}
 
-    .actions {
-        display: flex;
-        align-items: center;
-    }
+.actions button {
+    background-color: transparent;
+    border: none;
+    color: #a73b62;
+    margin-right: 15px;
+    cursor: pointer;
+}
 
-    .actions button {
-        background-color: transparent;
-        border: none;
-        color: #a73b62;
-        margin-right: 15px;
-        cursor: pointer;
-    }
+.user {
+    display: flex;
+    align-items: center;
+}
 
-    .user {
-        display: flex;
-        align-items: center;
-    }
+.user img {
+    width: 30px;
+    margin-right: 5px;
+}
 
-    .user img {
-        width: 30px;
-        margin-right: 5px;
-    }
+/* Patient Info Section */
+.patient-info {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 250px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+}
 
-    /* Patient Info Section */
-    .patient-info {
-        background-color: #f5f5f5;
-        padding: 20px;
-        border-radius: 20px;
-        margin-bottom: 20px;
-        text-align: center;
-        width: 250px;
-        height: 55px;
-        display: flex;
-        align-items: center;
-    }
+.avatar {
+    width: 60px;
+    height: 60px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 15px;
+}
 
-    .avatar {
-        width: 60px;
-        height: 60px;
-        background-color: #ccc;
-        border-radius: 50%;
-        margin-right: 15px;
-    }
+.details h3 {
+    margin: 0;
+}
 
-    .details h3 {
-        margin: 0;
-    }
+.details p {
+    margin: 5px 0;
+}
 
-    .details p {
-        margin: 5px 0;
-    }
+.gender-badge {
+    background-color: #ffb6c1;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    display: inline-block;
+}
 
-    .gender-badge {
-        background-color: #ffb6c1;
-        color: white;
-        padding: 3px 10px;
-        border-radius: 15px;
-        font-size: 14px;
-        display: inline-block;
-    }
+/* Patient Status Section */
+.patient-status {
+    background-color: #f5f5f5;
+    padding: 17px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 250px;
+    height: 20px;
+}
 
-    /* Patient Status Section */
-    .patient-status {
-        background-color: #f5f5f5;
-        padding: 17px;
-        border-radius: 20px;
-        margin-bottom: 20px;
-        text-align: center;
-        width: 250px;
-        height: 20px;
-    }
+.patient-status p {
+    margin: 0;
+    font-size: 14px;
+}
 
-    .patient-status p {
-        margin: 0;
-        font-size: 14px;
-    }
+/* Menu Section */
+.menu {
+    display: flex;
+    flex-direction: column;
+}
 
-    /* Menu Section */
-    .menu {
-        display: flex;
-        flex-direction: column;
-    }
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #ffb6c1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    width: 275px;
+    height: 25px;
+}
 
-    .menu-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px;
-        background-color: #ffb6c1;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        width: 275px;
-        height: 25px;
-    }
+.menu-item.active {
+    background-color: #ff6699;
+}
 
-    .menu-item.active {
-        background-color: #ff6699;
-    }
+.arrow {
+    font-weight: bold;
 
-    .arrow {
-        font-weight: bold;
+}
 
-    }
+/* General Layout */
+.invoice-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    color: #b0185b;
+}
 
-    /* General Layout */
-    .invoice-container {
-        max-width: 700px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        border: 1px solid #eee;
-        border-radius: 10px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        font-family: Arial, sans-serif;
-        color: #b0185b;
-    }
+.invoice-header {
+    display: flex;
+    align-items: center;
+    /* Center-aligns the content vertically */
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
 
-    .invoice-header {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+.header-text {
+    flex: 1;
+    /* Allows the text to take up available space */
+}
 
-    .invoice-header img {
-        width: 60px;
-        margin-bottom: 10px;
-    }
+.header-logo img {
+    height: 40px;
+    /* Adjust height to match the <h1> text size */
+    margin-left: 15px;
+    /* Adds some spacing between text and logo */
+}
 
-    .invoice-header h1 {
-        font-size: 24px;
-        color: #b0185b;
-        margin: 0;
-        font-weight: bold;
-    }
+.invoice-header img {
+    width: 180px;
+    height: 80px;
+}
 
-    .section-title {
-        font-size: 16px;
-        font-weight: bold;
-        color: #b0185b;
-        margin-top: 20px;
-        border-top: 1px solid #e0e0e0;
-        padding-top: 10px;
-    }
+.invoice-header h1 {
+    font-size: 24px;
+    color: #b0185b;
+    margin: 0;
+    font-weight: bold;
+}
 
-    /* Patient Information and Service Details */
-    .invoice-details,
-    .invoice-table {
-        margin-top: 10px;
-        font-size: 14px;
-        color: #333;
-    }
+.section-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #b0185b;
+    margin-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 10px;
+}
 
-    .invoice-details p,
-    .invoice-table p {
-        margin: 5px 0;
-    }
+/* Patient Information and Service Details */
+.invoice-details,
+.invoice-table {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
 
-    .invoice-table th,
-    .invoice-table td {
-        padding: 8px;
-        font-size: 14px;
-        color: #333;
-    }
+.invoice-details p,
+.invoice-table p {
+    margin: 5px 0;
+}
 
-    .invoice-table th {
-        text-align: left;
-        font-weight: bold;
-        border-bottom: 1px solid #e0e0e0;
-    }
+.invoice-table th,
+.invoice-table td {
+    padding: 8px;
+    font-size: 14px;
+    color: #333;
+}
 
-    /* Total Section */
-    .total-price {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: right;
-        color: #b0185b;
-        border-top: 1px solid #e0e0e0;
-        padding-top: 10px;
-    }
+.invoice-table th {
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 1px solid #e0e0e0;
+}
 
-    /* Footer Note */
-    .note {
-        font-size: 12px;
-        color: #777;
-        text-align: center;
-        margin-top: 20px;
-    }
+/* Total Section */
+.total-price {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+    color: #b0185b;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 10px;
+}
 
-    /* Print Button */
-    .print-button {
-        display: block;
-        width: 100%;
-        text-align: center;
-        margin-top: 20px;
-        padding: 10px;
-        background-color: #b0185b;
-        color: #fff;
-        font-size: 14px;
-        font-weight: bold;
-        text-transform: uppercase;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+/* Footer Note */
+.note {
+    font-size: 12px;
+    color: #777;
+    text-align: center;
+    margin-top: 20px;
+}
 
-    .print-button:hover {
-        background-color: #a51655;
-    }
+/* Print Button */
+.print-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #b0185b;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.print-button:hover {
+    background-color: #a51655;
+}
