@@ -235,7 +235,7 @@ iframe {
   width: calc(100% - 560px);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: 85% 50%;
   position: relative;
   z-index: 1;
 }
@@ -523,6 +523,18 @@ input.input100 {
 /*------------------------------------------------------------------
 [ Responsive ]*/
 
+@media (max-width: 2600px) {
+  .login100-more {
+    background-position: 85% 50%;
+  }
+}
+
+@media (max-width: 1500px) {
+  .login100-more {
+    background-position: 80% 50%;
+  }
+}
+
 @media (max-width: 992px) {
   .login100-form {
     width: 50%;
@@ -531,7 +543,7 @@ input.input100 {
   }
 
   .login100-more {
-    width: 50%;
+    background-position: 85% 50%;
   }
 }
 
@@ -639,3 +651,4 @@ input.input100 {
   background: #AC3163;
   color: #faf3f3;
 }
+
