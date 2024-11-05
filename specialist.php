@@ -46,7 +46,7 @@ $allServices = ['Acupuncture', 'Clinical Nutrition', 'Dermatology', 'Dentistry',
                 <h1 class="fw-medium">Registration > Book Appointment > <span class="fw-bold">Specialist</span></h1>
                 <br>
                 <div style="background-color: white;" class="d-flex justify-content-center flex-column align-items-center">
-                    <h2 class="text-center m-3 p-3">Choose your specialist fields!</h2>
+                    <h2 class="text-center m-3 p-3">Choose   your specialist fields!</h2>
                     <input type="text" id="searchInput" placeholder="Search specialist fields..." class="form-control mb-3" style="width: 300px;">
                     <div class="row" id="serviceList">
                         <?php foreach ($allServices as $service): ?>
@@ -70,7 +70,7 @@ $allServices = ['Acupuncture', 'Clinical Nutrition', 'Dermatology', 'Dentistry',
 <script>
     document.getElementById('searchInput').addEventListener('input', function() {
         let filter = this.value.toLowerCase();
-        let items = document.querySelectorAll('.service-item');
+        let items = document.querySelectorAll('#serviceList .col-md-4');
 
         items.forEach(function(item) {
             let text = item.textContent.toLowerCase();
