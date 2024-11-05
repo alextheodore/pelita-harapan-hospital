@@ -151,6 +151,8 @@ $roomList = $conn->query("
                                                     <td><?= $patient['email'] ?></td>
                                                     <td>
                                                         <a href="patient_details.php?patient_id=<?= $patient['patient_id'] ?>" class="btn btn-primary btn-sm">More Details</a>
+                                                        <a href="edit_patient.php?patient_id=<?= $patient['patient_id'] ?>" class="btn btn-warning btn-sm">Update</a>
+                                                        <a href="conf/delete_patient.php?patient_id=<?= $patient['patient_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this patient?');">Delete</a>
                                                     </td>
                                                 </tr>
                                             <?php endwhile; ?>
