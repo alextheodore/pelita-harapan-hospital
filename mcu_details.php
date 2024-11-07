@@ -80,14 +80,14 @@ if (isset($_GET['service'])) {
                             <form action="conf/create_mcu.php" method="POST">
                                 <div class="dates d-flex flex-column align-items-center">
                                     <label for="mcu_date">Select Date: </label>
-                                    <input type="date" id="mcu_date" name="mcu_date" required>
+                                    <input type="date" id="mcu_date" name="mcu_date" min="<?php echo date('Y-m-d'); ?>"> 
                                 </div>
 
                                 <div class="time-slots w-100">
                                     <table class="table">
                                         <tr>
                                             <td>09.00 - 09.20</td>
-                                            <td><input type="radio" name="time_slot" value="09:00" required></td>
+                                            <td><input type="radio" name="time_slot" value="09:00"></td>
                                         </tr>
                                         <tr>
                                             <td>09.30 - 09.50</td>
@@ -106,6 +106,11 @@ if (isset($_GET['service'])) {
                                 <br>
                                 <input type="hidden" name="test_name" value="<?php echo $serviceDetails['name'] ?>">
                                 <input type="hidden" name="price" value="<?php echo $serviceDetails['price'] ?>">
+                                <?php if (isset($_SESSION['error'])) {
+                                    echo '<div id="errorMessage" class="alert alert-danger animate__animated animate__fadeInDown" role="alert" style="background-color: #fe4949; color: white; text-align: center; margin: 20px auto; padding: 15px; border-radius: 5px;">'
+                                        . htmlspecialchars($_SESSION['error']) . '</div>';
+                                    unset($_SESSION['error']);
+                                } ?>
                                 <button type="submit" class="btn book-now-btn">Book Now!</button>
                             </form>
                         </div>

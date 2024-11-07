@@ -140,7 +140,6 @@ INSERT INTO `mspatient` (`patient_id`, `name`, `dob`, `gender`, `phone`, `email`
 
 -- --------------------------------------------------------
 
---
 -- Table structure for table `msroomdetails`
 --
 

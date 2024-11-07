@@ -3,11 +3,9 @@ session_start();
 include 'connection.php';
 $conn = getConnection();
 
-$selectedDate = $_GET['date'];
+// If not selected, choose today
+$selectedDate = $_GET['date'] ? $selectedDate : date('Y-m-d');
 
-echo $selectedDate;
-
-// Modified query with JOIN to include patient and doctor details
 $stmt = $conn->prepare("
     SELECT 
         msappointment.appointment_id, 
@@ -42,4 +40,3 @@ $conn->close();
 
 header("Location: ../patientstatus.php?date=" . urlencode($selectedDate));
 exit;
-?>

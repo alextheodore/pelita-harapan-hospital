@@ -11,6 +11,12 @@ $price = $_POST['price'];
 
 $datetime = date('Y-m-d H:i:s', strtotime("$date $time"));
 
+if ($date == null || $time == null || $datetime == "") {
+    $_SESSION['error'] = "Date and time must be filled!";
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+    exit;
+}
+
 // Database connection
 $conn = getConnection();
 

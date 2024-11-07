@@ -94,7 +94,7 @@ h2 {
 }
 
 .navigasi {
-  border-bottom: 10px solid #fff;
+  /* border-bottom: 10px solid #fff; */
 }
 
 .navigasi > a {
@@ -122,10 +122,6 @@ h2 {
   border-radius: 30px;
 }
 
-.upcoming-patients h4 {
-  color: var(--accent-color);
-  font-weight: bold;
-}
 
 .upcoming-patients ul {
   padding: 0;

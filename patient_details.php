@@ -208,6 +208,16 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                                                                     echo "<p>Checkup on " . htmlspecialchars($checkup['date']) . " - Details: " . htmlspecialchars($checkup['details']) . "</p>";
                                                                     break;
 
+                                                                case 'EM': // Emergency
+                                                                    $emergencyQuery = $conn->prepare("SELECT date, actions, price, status from MsEmergency WHERE emergency_id = ?");
+                                                                    $emergencyQuery->bind_param("s", $details_id);
+                                                                    $emergencyQuery->execute();
+                                                                    $emergency = $emergencyQuery->get_result()->fetch_assoc();
+                                                                    $statusMessage = htmlspecialchars($emergency["status"]);
+                                                                    $totalPrice += $emergency['price'];
+                                                                    echo "<p>Emergency Pickup on " . htmlspecialchars($emergency['date']) . " - Details: " . htmlspecialchars($emergency['actions']) . "</p>";
+                                                                    break;
+
                                                                 case 'TE': // Test
                                                                     $testQuery = $conn->prepare("SELECT name, price, status FROM MsTest WHERE test_id = ?");
                                                                     $testQuery->bind_param("s", $details_id);

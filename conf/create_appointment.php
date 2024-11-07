@@ -7,9 +7,16 @@ $date = $_POST['appointment_date'];
 $time = $_POST['time_slot'];
 $datetime = date('Y-m-d H:i:s', strtotime("$date $time"));
 
+if ($date == null || $time == null || $datetime == "") {
+    $_SESSION['error'] = "Date and time must be filled!";
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+    exit;
+}
+
 $conn = getConnection();
 
-function generateAppointmentId($conn) {
+function generateAppointmentId($conn)
+{
     $query = "SELECT appointment_id FROM `msappointment` ORDER BY appointment_id DESC LIMIT 1";
     $result = $conn->query($query);
     $latestID = 'AP000';
@@ -61,7 +68,6 @@ try {
     $encodedDetails = urlencode($details);
     header("Location: ../appointment_confirm.php?details=" . $encodedDetails);
     exit();
-
 } catch (Exception $e) {
     $conn->rollback();
     echo "Error: " . $e->getMessage();

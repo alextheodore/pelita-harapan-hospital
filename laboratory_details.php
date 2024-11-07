@@ -58,6 +58,11 @@ if (isset($_GET['service'])) {
                             <li><?php echo $serviceDetails['description'][2] ?></li>
                         </ul>
                         <p class="price" style="font-size: 32px;">Rp. <?php echo number_format($serviceDetails['price'], 0, ',', '.'); ?></p>
+                        <?php if (isset($_SESSION['error'])) {
+                            echo '<div id="errorMessage" class="alert alert-danger animate__animated animate__fadeInDown" role="alert" style="background-color: #fe4949; color: white; text-align: center; margin: 20px auto; padding: 15px; border-radius: 5px; width: 50%">'
+                                . htmlspecialchars($_SESSION['error']) . '</div>';
+                            unset($_SESSION['error']);
+                        } ?>
                         <div class="schedule-section">
                             <button type="button" class="btn book-now-btn" data-toggle="modal" data-target="#scheduleModal">
                                 Book Now
@@ -80,7 +85,7 @@ if (isset($_GET['service'])) {
                             <form action="conf/create_test.php" method="POST">
                                 <div class="dates d-flex flex-column align-items-center">
                                     <label for="mcu_date">Select Date: </label>
-                                    <input type="date" id="mcu_date" name="mcu_date" required>
+                                    <input type="date" id="mcu_date" name="mcu_date" min="<?php echo date('Y-m-d'); ?>" required>
                                 </div>
 
                                 <div class="time-slots w-100">

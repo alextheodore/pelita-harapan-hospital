@@ -41,17 +41,16 @@
 
                  <?php include 'topbar.php' ?>
                  <!-- Welcome Section -->
-                 <h1 class="fw-medium">Registration > Book Appointment > <?php 
-                 if($_SESSION['specialist'] == "Specialist"){
-                    echo "Specialist > ";
-                 }
-                 else{
-
-                 }
-                 ?>
-                 <span class="fw-bold">
-                    <?php echo $_GET['specialist'] . " Practicioner" ?>
-                </span></h1>
+                 <h1 class="fw-medium">Registration > Book Appointment > <?php
+                                                                            if ($_SESSION['specialist'] == "Specialist") {
+                                                                                echo "Specialist > ";
+                                                                            } else {
+                                                                            }
+                                                                            ?>
+                     <span class="fw-bold">
+                         <?php echo $_GET['specialist'] . " Practicioner" ?>
+                     </span>
+                 </h1>
                  <div style="background-color: white;" class="d-flex justify-content-center flex-column align-items-center">
                      <h2 class="text-center m-3 p-3">Choose your specialist doctor!</h2>
                      <input type="text" id="searchInput" placeholder="Search doctor..." class="form-control mb-3" style="width: 300px;" oninput="filterDoctors()">
@@ -70,7 +69,9 @@
                              <div class="col-md-4 mb-4">
                                  <a href="doctorschedule.php?specialist=<?php echo urlencode($_GET['specialist']); ?>&doctor=<?php echo $encodedDoctorDetails; ?>" style="text-decoration: none; color: inherit;">
                                      <div class="service-item d-flex justify-content-around align-items-center p-3 rounded m-4 flex-row" style="height: 150px; min-width: 200px;">
-                                         <img src="/images/gambar_dokter.png" width="100px" height="100px">
+                                         <img src="images/doctors/<?php echo $doctor['doctor_id']?>.jpg" width="100px" height="100px">
+                                         <!-- <img src="images/doctors/DR001.jpg" width="100px" height="100px"> -->
+                                         <?php echo $doctor['doctor_id'] ?>
                                          <h3 class="text-center"><?php echo $doctor['name'] ?></h3>
                                      </div>
                                  </a>

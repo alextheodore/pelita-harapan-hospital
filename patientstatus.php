@@ -178,7 +178,7 @@
                     <div class="date-picker">
                         <form method="GET" action="conf/get_appointment.php">
                             <label for="date">Select a Date:</label>
-                            <input type="date" id="date" name="date" value="<?php echo isset($_SESSION['selected_date']) ? $_SESSION['selected_date'] : date('Y-m-d'); ?>" required>
+                            <input type="date" id="date" name="date" value="<?php echo isset($_SESSION['selected_date']) ? $_SESSION['selected_date'] :  date('Y-m-d'); ?>" min="<?php echo date('Y-m-d'); ?>" required>
                             <button type="submit" class="btn btn-primary ms-2">Filter</button>
                         </form>
                     </div>

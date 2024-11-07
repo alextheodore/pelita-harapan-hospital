@@ -7,6 +7,7 @@ $conn = getConnection();
 $name = $_POST['name'];
 $nik = $_POST['nik'];
 
+
 $stmt = $conn->prepare("SELECT * FROM mspatient WHERE name = ? AND nik = ?");
 $stmt->bind_param("ss", $name, $nik);
 $stmt->execute();
@@ -33,7 +34,12 @@ if ($patients) {
     header("Location: ../registration.php");
     exit();
 } else {
-    $_SESSION['error'] = "Patients not found on database! Register it first!";
+    if ($name == null || $nik == null) {
+        $_SESSION['error'] = "Please fill in the data!";
+    }
+    else{
+        $_SESSION['error'] = "Patients not found on database! Register it first!";
+    }
     header("Location: ../registered.php");
     exit();
 }

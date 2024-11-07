@@ -313,7 +313,15 @@ $transactionHeaders = $transactionHeaderQuery->get_result();
                                                                 $price = $checkup['price'];
                                                                 $serviceOutput = "Checkup on " . htmlspecialchars($checkup['date']) . " - Details: " . htmlspecialchars($checkup['details']);
                                                                 break;
-
+                                                            case 'EM':
+                                                                $emergencyQuery = $conn->prepare("SELECT date, actions, price, status from MsEmergency WHERE emergency_id = ?");
+                                                                $emergencyQuery->bind_param("s", $details_id);
+                                                                $emergencyQuery->execute();
+                                                                $emergency = $emergencyQuery->get_result()->fetch_assoc();
+                                                                $statusMessage = htmlspecialchars($emergency["status"]);
+                                                                $price = $checkup['price'];
+                                                                $serviceOutput = "Emergency Pickup on " . htmlspecialchars($emergency['date']);
+                                                                break;
                                                             case 'TE':
                                                                 $testQuery = $conn->prepare("SELECT name, price FROM MsTest WHERE test_id = ?");
                                                                 $testQuery->bind_param("s", $details_id);

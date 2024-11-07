@@ -21,6 +21,35 @@ if ($stmt->execute()) {
         $_SESSION['fullname'] = $row['fullname'];
         $_SESSION['username'] = $row['username'];
 
+        $selectedDate = date('Y-m-d');
+
+        $stmt = $conn->prepare("
+            SELECT 
+                msappointment.appointment_id, 
+                msappointment.date,
+                msappointment.status, 
+                msappointment.price,
+                msdoctor.doctor_id, 
+                msdoctor.name AS doctor_name,
+                mspatient.patient_id, 
+                mspatient.name AS patient_name
+            FROM msappointment
+            JOIN msdoctor ON msappointment.doctor_id = msdoctor.doctor_id
+            JOIN mspatient ON msappointment.patient_id = mspatient.patient_id
+            WHERE DATE(msappointment.date) = ?
+        ");
+
+        $stmt->bind_param('s', $selectedDate);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $appointments = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $appointments[] = $row;
+        }
+
+        $_SESSION['today_appointments'] = $appointments;
         header("Location: ../home.php");
     } else {
         $_SESSION['error'] = "Invalid Credentials";
@@ -34,4 +63,3 @@ if ($stmt->execute()) {
 // Close the statement and connection
 $stmt->close();
 $conn->close();
-?>
