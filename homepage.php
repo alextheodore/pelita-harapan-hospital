@@ -40,7 +40,7 @@
         <h1>Pelita Harapan Hospital</h1>
         <div class="image-container mb-4 bg-white">
           <img
-            src="images/doctor.png"
+            src="images/homepage.png"
             class="img-fluid"
             alt="Doctors" />
         </div>
