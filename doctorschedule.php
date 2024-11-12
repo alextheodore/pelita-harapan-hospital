@@ -35,7 +35,17 @@
                 </h1>
                 <div class="appointment-container">
                     <div class="doctor-info">
-                        <img src="images/gambar_dokter.png" alt="Dr. Austa Mia">
+                        <!-- <img src="images/doctors/DR001.JPG" alt="Dr. Aldo"> -->
+                         
+                        <?php
+                        $doctorDetails = json_decode($_GET['doctor'], true);
+                        $_SESSION['selectedDoctor'] = $doctorDetails;
+                        
+                        $doctorId = htmlspecialchars($doctorDetails['id']);
+                        ?>
+                        
+                        <img src="images/doctors/<?php echo $doctorId; ?>.jpg" alt="Dr. <?php echo htmlspecialchars($doctorDetails['name']); ?>" width="100px" height="100px">
+                        
                         <div class="doctor-details">
                             <?php
                             $doctorDetails = json_decode($_GET['doctor'], true);
